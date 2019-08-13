@@ -1,0 +1,9 @@
+<div class="mt-auto">
+  <form [formGroup]="ingridientsGroup">
+    <label for="ingridients" class="col-form-label">Какие ингридиенты есть в холодильнике?</label>
+    <input type="text" class="form-control" id="ingridients" aria-describedby="ingridientsHelp" formControlName="ingridientsList">
+    <span id="ingridientsHelp" class="text-muted small">
+    * Название должно содержать не менее 3 символов
+  </span>
+  </form>
+</div>

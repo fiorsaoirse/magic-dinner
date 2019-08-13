@@ -1,0 +1,6 @@
+export enum ErrorCodes {
+  AUTHENTICATION_ERROR = 1,
+  SYSTEM_ERROR = 2,
+  NOT_FOUND = 3,
+  UNKNOWN_ERROR = 99
+}

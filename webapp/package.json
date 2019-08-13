@@ -25,6 +25,8 @@
         "@angular/router": "~7.2.0",
         "bootstrap": "^4.3.1",
         "core-js": "^2.5.4",
+        "jquery": "^3.4.1",
+        "popper.js": "^1.15.0",
         "rxjs": "~6.3.3",
         "tslib": "^1.9.0",
         "zone.js": "~0.8.26"
@@ -43,7 +45,7 @@
         "jasmine-spec-reporter": "~4.2.1",
         "jest": "^24.8.0",
         "jest-preset-angular": "^7.1.1",
-        "karma": "~3.1.1",
+        "karma": "^4.2.0",
         "karma-chrome-launcher": "~2.2.0",
         "karma-coverage-istanbul-reporter": "~2.0.1",
         "karma-jasmine": "~1.1.2",
