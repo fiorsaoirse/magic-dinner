@@ -15,6 +15,7 @@ export class GetService {
   constructor(private httpSender: HttpSenderService) {
   }
 
+  //TODO: поменять на серверные адреса
   private getRecipesCountAddress = 'https://eda.ru/RecipesCatalog/GetRecipesCount';
   private getPageAddress = 'https://eda.ru/RecipesCatalog/GetPage';
   private findByNameAddress = 'https://eda.ru/Ingredient/FindByName';

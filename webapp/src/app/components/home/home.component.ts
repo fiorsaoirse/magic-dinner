@@ -21,12 +21,11 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.initForm();
     const input$ = this.ingridientsGroup.get('ingridientsList').valueChanges.pipe(
       debounceTime(500),
-      switchMap((query: string) => this.getService.findByName(query)),
-
+      /*switchMap((query: string) => this.getService.findByName(query)),*/
     );
-    /*input$.subscribe((currentValue: string) => {
+    this.subs = input$.subscribe((currentValue: string) => {
       console.log(currentValue);
-    });*/
+    });
   }
 
   initForm(): void {
