@@ -1,4 +1,4 @@
-import { IIngridient } from './ingridient';
+import { IIngredient } from './ingredient';
 
 export interface IPageResponse {
   AfterCut: (string | null);
@@ -11,7 +11,7 @@ export interface IPageResponse {
   Heading: string;
   Icon: (string | null);
   IngredientCatalogModel: (string | null);
-  PopularIngredients: IIngridient[];
+  PopularIngredients: IIngredient[];
   PopularRecipeGroupsBlock: (string | null);
   Recipes: string;
   Title: string;

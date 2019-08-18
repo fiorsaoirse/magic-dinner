@@ -1,9 +1,23 @@
 <div class="mt-auto">
-  <form [formGroup]="ingridientsGroup">
-    <label for="ingridients" class="col-form-label">Какие ингридиенты есть в холодильнике?</label>
-    <input type="text" class="form-control" id="ingridients" aria-describedby="ingridientsHelp" formControlName="ingridientsList">
-    <span id="ingridientsHelp" class="text-muted small">
+  <form [formGroup]="ingredientsGroup">
+    <div>
+      <label for="ingredients" class="col-form-label">Какие ингредиенты есть в холодильнике?</label>
+      <input type="text" class="form-control" id="ingredients"
+             aria-describedby="ingredientsHelp"
+             formControlName="ingredientList">
+      <ng-container *ngIf="selectedIngredients && selectedIngredients.length">
+        <span class="badge badge-pill badge-primary" *ngFor="let ingredient of selectedIngredients">{{ingredient.Name}}</span>
+      </ng-container>
+    </div>
+    <ng-container *ngIf="ingredientList && ingredientList.length">
+      <ul class="list-group">
+        <li class="list-group-item pointer-element"
+            *ngFor="let element of ingredientList"
+            (click)="setIngredient(element)">{{element.Name}}</li>
+      </ul>
+    </ng-container>
+    <span id="ingredientsHelp" class="text-muted small">
     * Название должно содержать не менее 3 символов
-  </span>
+    </span>
   </form>
 </div>

@@ -1,4 +1,4 @@
-export interface IFoundIngridient {
+export interface IFoundIngredient {
   ClassID: number;
   GenitiveCase: (unknown | null);
   InstrumentalCase: (unknown | null);

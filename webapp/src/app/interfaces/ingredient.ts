@@ -1,4 +1,4 @@
-export interface IIngridient {
+export interface IIngredient {
   Name: string;
   ObjectId: number;
   Url: string;
