@@ -1,6 +1,6 @@
 import { IIngredient } from './ingredient';
 
-export interface IPageResponse {
+export interface IGetPage {
   AfterCut: (string | null);
   BeforeCut: (string | null);
   Breadcrumbs: string;

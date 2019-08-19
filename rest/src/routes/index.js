@@ -25,4 +25,21 @@ router.get('/findByName', async (req, res) => {
   }
 });
 
+router.post('/getPage', async (req, res) => {
+  const { body } = req;
+  console.log('body ', body);
+  try {
+    const result = await request.post({
+        uri: getPageAddress,
+        form: body
+    });
+    res.json({ data: JSON.parse(result) });
+    res.end();
+  } catch (e) {
+    res.status(500);
+    res.json({ error: e });
+    res.end();
+  }
+});
+
 export default router;

@@ -1,3 +1,22 @@
+.search-container {
+  position: relative;
+}
+
+.search-box {
+  position: absolute;
+  width: 100%;
+  z-index: 1;
+}
+
 .pointer-element:hover {
-  background: rgba(157,198,255,0.5);
+  background: rgb(157, 198, 255);
+}
+
+.badges {
+  margin-bottom: 0.5em;
+  margin-top: 0.5em;
+}
+
+.badges > .badge {
+  margin-right: 0.5em;
 }

@@ -3,7 +3,7 @@ import { HttpSenderService } from './http-sender.service';
 import { IRecipesParams } from '../interfaces/recipes-params';
 import { HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { IPageResponse } from '../interfaces/page-response';
+import { IPageResponse } from '../interfaces/responses/page-response';
 import { IRecipesCountResponse } from '../interfaces/recipes-count-response';
 import { IFindByName } from '../interfaces/responses/find-by-name';
 

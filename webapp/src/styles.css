@@ -3,3 +3,7 @@
 .pointer-element {
   cursor: pointer;
 }
+
+.delete-btn {
+  cursor: pointer;
+}
