@@ -1,0 +1,184 @@
+<div class="tile-list__horizontal-tile horizontal-tile js-portions-count-parent js-bookmark__obj">
+    <div class="clearfix">
+        <div class="horizontal-tile__preview " data-label-image=''>
+            <div class='horizontal-tile__item-link js-click-link '
+                 data-href="/recepty/osnovnye-blyuda/tushenaja-kapusta-17323">
+                <div class='horizontal-tile__cover'></div>
+                <div class="lazy-load-container js-lazy-loading" data-title="Тушеная капуста" data-alt="Тушеная капуста" data-src="https://img01.rl0.ru/eda/c285x285i/s2.eda.ru/Photos/120213175727-120213175801-p-O-tushenaja-kapusta.jpg">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="horizontal-tile__preview-image js-lazy-loading-svg"
+                         xmlns:xlink="http://www.w3.org/1999/xlink"
+                         width="180" height="180"
+                         viewBox="0 0 180 180">
+                        <filter id="blur" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+                            <feGaussianBlur stdDeviation="10 10" edgeMode="duplicate" />
+                            <feComponentTransfer>
+                                <feFuncA type="discrete" tableValues="1 1" />
+                            </feComponentTransfer>
+                        </filter>
+                        <image filter="url(#blur)"
+                               xlink:href="https://img01.rl0.ru/eda/c20x20i/s2.eda.ru/Photos/120213175727-120213175801-p-O-tushenaja-kapusta.jpg"
+                               x="0" y="0"
+                               height="100%" width="100%"/>
+                    </svg>
+                </div>
+            </div>
+        </div>
+        <div class="horizontal-tile__content">
+            <ul class="breadcrumbs">
+                <li><a href="https://eda.ru/recepty/osnovnye-blyuda"><span>Основные блюда</span></a></li>
+                <li><a href="https://eda.ru/recepty/veganskaya-eda"><span>Веганская еда</span></a></li>
+            </ul>
+            <h3 class="horizontal-tile__item-title item-title">
+                <a href="/recepty/osnovnye-blyuda/tushenaja-kapusta-17323">
+          <span>
+            Тушеная капуста
+          </span>
+                </a>
+            </h3>
+            <div class="horizontal-tile__author">
+                Автор: <span class="horizontal-tile__author-link js-click-link" data-href="https://eda.ru/avtory/602447" content="Елена П.">Елена П.</span>
+            </div>
+            <div class="horizontal-tile__item-specifications random-class-9f670943-91b3-461a-8c40-64d3c6540feb">
+                <div class="inline-dropdown js-toggle-class"
+                     data-toggle-class-options='{
+                "toggleClass": "inline-dropdown_active",
+                "toggleObj": "random-class-9f670943-91b3-461a-8c40-64d3c6540feb"
+              }'>
+                    8 ингредиентов
+                    <svg class="inline-dropdown__icon">
+                        <use xlink:href="#sv" />
+                    </svg>
+                </div>
+                <span class="portions-counter">
+          <svg>
+            <use xlink:href="#portion" />
+          </svg>
+          <span class="js-portions-count-print">
+            4 порции
+          </span>
+        </span>
+                <span class="prep-time">
+            <svg>
+              <use xlink:href="#timer" />
+            </svg>
+            40 минут
+
+          </span>
+                <div class="inline-dropdown__dropdown">
+                    <div class="inline-dropdown__dropdown-pad">
+
+                        <div class="ingredients-list ingredients-list_mini">
+                            <div class="ingredients-list__header">
+                                <p class="ingredients-list__title g-h6">Ингредиенты</p>
+                                <div class="ingredients-list__portions-control portions-control print-invisible">
+                                    <span class="portions-control__hint">порции</span>
+                                    <span class="portions-control__minus js-minus">
+      <svg>
+        <use xlink:href="#minus"/>
+      </svg>
+    </span>
+                                    <input class="portions-control__count g-h6 js-portions-count js-tooltip" data-recipe-id="17323" type="number" inputmode="numeric" value=4 title="Количество порций может быть в пределах от 1 до 12">
+                                    <span class="portions-control__plus js-plus">
+      <svg>
+        <use xlink:href="#plus"/>
+      </svg>
+    </span>
+                                </div>
+                            </div>
+                            <div class="ingredients-list__content" cellpadding="0" cellspacing="0">
+                                <p class="ingredients-list__content-item content-item js-cart-ingredients" data-ingredient-object='{"id": 13413, "name": "Лук репчатый", "amount": "1 штука"}'>
+    <span class="content-item__name tooltip">
+      <span class="js-tooltip js-tooltip-ingredient"
+            data-url="/Ingredient/RecipePreview"
+            data-id="13413">
+        Лук репчатый
+      </span>
+    </span>
+                                    <span class="content-item__measure js-ingredient-measure-amount" data-id="13413">1 штука</span>
+                                </p>
+                                <p class="ingredients-list__content-item content-item js-cart-ingredients" data-ingredient-object='{"id": 13436, "name": "Белокочанная капуста", "amount": "&frac12; кг"}'>
+    <span class="content-item__name tooltip">
+      <span class="js-tooltip js-tooltip-ingredient"
+            data-url="/Ingredient/RecipePreview"
+            data-id="13436">
+        Белокочанная капуста
+      </span>
+    </span>
+                                    <span class="content-item__measure js-ingredient-measure-amount" data-id="13436">&frac12; кг</span>
+                                </p>
+                                <p class="ingredients-list__content-item content-item js-cart-ingredients" data-ingredient-object='{"id": 13422, "name": "Уксус", "amount": "&frac12; столовой ложки"}'>
+    <span class="content-item__name tooltip">
+      <span class="js-tooltip js-tooltip-ingredient"
+            data-url="/Ingredient/RecipePreview"
+            data-id="13422">
+        Уксус
+      </span>
+    </span>
+                                    <span class="content-item__measure js-ingredient-measure-amount" data-id="13422">&frac12; столовой ложки</span>
+                                </p>
+                                <p class="ingredients-list__content-item content-item js-cart-ingredients" data-ingredient-object='{"id": 13410, "name": "Сахар", "amount": "&frac12; столовой ложки"}'>
+    <span class="content-item__name tooltip">
+      <span class="js-tooltip js-tooltip-ingredient"
+            data-url="/Ingredient/RecipePreview"
+            data-id="13410">
+        Сахар
+      </span>
+    </span>
+                                    <span class="content-item__measure js-ingredient-measure-amount" data-id="13410">&frac12; столовой ложки</span>
+                                </p>
+                                <p class="ingredients-list__content-item content-item js-cart-ingredients" data-ingredient-object='{"id": 13458, "name": "Пшеничная мука", "amount": "&frac12; столовой ложки"}'>
+    <span class="content-item__name tooltip">
+      <span class="js-tooltip js-tooltip-ingredient"
+            data-url="/Ingredient/RecipePreview"
+            data-id="13458">
+        Пшеничная мука
+      </span>
+    </span>
+                                    <span class="content-item__measure js-ingredient-measure-amount" data-id="13458">&frac12; столовой ложки</span>
+                                </p>
+                                <p class="ingredients-list__content-item content-item js-cart-ingredients" data-ingredient-object='{"id": 13727, "name": "Томатное пюре", "amount": "1 столовая ложка"}'>
+    <span class="content-item__name tooltip">
+      <span class="js-tooltip js-tooltip-ingredient"
+            data-url="/Ingredient/RecipePreview"
+            data-id="13727">
+        Томатное пюре
+      </span>
+    </span>
+                                    <span class="content-item__measure js-ingredient-measure-amount" data-id="13727">1 столовая ложка</span>
+                                </p>
+                                <p class="ingredients-list__content-item content-item js-cart-ingredients" data-ingredient-object='{"id": 13411, "name": "Вода", "amount": "&frac12; стакана"}'>
+    <span class="content-item__name tooltip">
+      <span class="js-tooltip js-tooltip-ingredient"
+            data-url="/Ingredient/RecipePreview"
+            data-id="13411">
+        Вода
+      </span>
+    </span>
+                                    <span class="content-item__measure js-ingredient-measure-amount" data-id="13411">&frac12; стакана</span>
+                                </p>
+                                <p class="ingredients-list__content-item content-item js-cart-ingredients" data-ingredient-object='{"id": 13423, "name": "Растительное масло", "amount": "2 столовые ложки"}'>
+    <span class="content-item__name tooltip">
+      <span class="js-tooltip js-tooltip-ingredient"
+            data-url="/Ingredient/RecipePreview"
+            data-id="13423">
+        Растительное масло
+      </span>
+    </span>
+                                    <span class="content-item__measure js-ingredient-measure-amount" data-id="13423">2 столовые ложки</span>
+                                </p>
+                            </div>
+
+                            <script type="text/javascript">
+                              window.ga('set', 'dimension7', '|luk-repchatyj|belokochannaja-kapusta|uksus|sahar|pshenichnaja-muka|tomatnoe-pjure|voda|rastitelnoe-maslo|');
+                            </script>
+
+                            <a class="ingredients-list__link" href="/recepty/osnovnye-blyuda/tushenaja-kapusta-17323">перейти на страницу рецепта</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>

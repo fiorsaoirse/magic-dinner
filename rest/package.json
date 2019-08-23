@@ -8,7 +8,8 @@
 		"test": "jest",
 		"start": "nodemon dist/bin/www",
 		"build": "babel ./src --out-dir dist",
-		"clean": "rm -rf ./dist"
+		"clean": "rm -rf ./dist",
+		"lint": "npx eslint . --fix"
 	},
 	"repository": {
 		"type": "git",
@@ -23,6 +24,7 @@
 	"dependencies": {
 		"@babel/runtime": "^7.5.5",
 		"body-parser": "^1.19.0",
+		"cheerio": "^1.0.0-rc.3",
 		"cookie-parser": "^1.4.4",
 		"cors": "^2.8.5",
 		"debug": "^4.1.1",

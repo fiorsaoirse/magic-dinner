@@ -1,5 +1,6 @@
-import { IGetPage } from '../get-page';
+import { IRecipe } from '../recipe';
 
 export interface IPageResponse {
-  data: IGetPage;
+  recipes: IRecipe[];
+  totalCount: number;
 }
