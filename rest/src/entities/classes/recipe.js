@@ -1,9 +1,9 @@
 export default class Recipe {
-  constructor(title, image, text, url, calories, proteins, fat, carbs) {
+  constructor(title, text, portions, ingredients, calories, proteins, fat, carbs) {
     this.title = title;
-    this.image = image;
     this.text = text;
-    this.url = url;
+    this.portions = portions;
+    this.ingredients = ingredients;
     this.energy = {
       calories,
       proteins,

@@ -1,6 +1,6 @@
 import cheerio from 'cheerio';
 import ShortRecipe from './entities/classes/short-recipe';
-import reduceNode from './reduceNode';
+import { reduceNode } from './nodesOperations';
 
 export default (html) => {
   const $ = cheerio.load(html);

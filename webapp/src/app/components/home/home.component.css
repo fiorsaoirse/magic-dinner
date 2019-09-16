@@ -8,7 +8,7 @@
   z-index: 1;
 }
 
-.pointer-element:hover {
+.list-group-item.pointer-element:hover {
   background: rgb(157, 198, 255);
 }
 
@@ -19,4 +19,9 @@
 
 .badges > .badge {
   margin-right: 0.5em;
+}
+
+.carousel-control-next,
+.carousel-control-prev {
+  filter: invert(100%);
 }

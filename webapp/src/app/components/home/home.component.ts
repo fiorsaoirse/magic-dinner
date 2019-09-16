@@ -68,4 +68,8 @@ export class HomeComponent implements OnInit, OnDestroy {
         this.resultSet = data;
       });
   }
+
+  openRecipe(url: string): void {
+    console.log(url);
+  }
 }

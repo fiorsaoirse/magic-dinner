@@ -3,5 +3,6 @@ env:
 parser: babel-eslint
 rules:
   no-console: 0
+  operator-linebreak: 0
 extends:
 - 'airbnb-base'
