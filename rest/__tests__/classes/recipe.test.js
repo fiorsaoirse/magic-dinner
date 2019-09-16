@@ -1,5 +1,5 @@
-import Recipe from "../../src/entities/classes/recipe";
-import Ingredient from "../../src/entities/classes/ingredient";
+import Recipe from '../../src/entities/classes/recipe';
+import Ingredient from '../../src/entities/classes/ingredient';
 
 test('Crating instance of Recipe class', () => {
   const mockRecipe = {
@@ -13,8 +13,8 @@ test('Crating instance of Recipe class', () => {
       calories: 120,
       proteins: 12,
       fat: 2,
-      carbs: 68
-    }
+      carbs: 68,
+    },
   };
 
   const recipe = new Recipe(
@@ -25,7 +25,7 @@ test('Crating instance of Recipe class', () => {
     120,
     12,
     2,
-    68
+    68,
   );
 
   expect(recipe).toEqual(mockRecipe);

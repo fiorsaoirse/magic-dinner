@@ -1,5 +1,5 @@
 lint:
-	npx eslint . --fix
+	npx eslint .
 
 dev:
 	 DEBUG=rest:* npm start

@@ -12,7 +12,7 @@ test('Parse HTML with one element', async () => {
     fs.readFile(path.join(__dirname, fixtures, oneElement), 'utf-8', (err, file) => {
       if (err) rej(err);
       res(file);
-    })
+    });
   });
 
   const snapshot = await promise;
@@ -23,10 +23,10 @@ test('Parse HTML with one element', async () => {
 
 test('Parse HTML and generate AST', async () => {
   const promise = new Promise((res, rej) => {
-    fs.readFile(path.join(__dirname, fixtures, html), 'utf-8', (err, data) => {
+    fs.readFile(path.join(__dirname, fixtures, html), 'utf-8', (err, file) => {
       if (err) rej(err);
-      res(data);
-    })
+      res(file);
+    });
   });
 
   const snapshot = await promise;
