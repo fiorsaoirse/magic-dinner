@@ -16,37 +16,62 @@
         </ng-container>
         <span id="ingredientsHelp" class="text-muted small">* Название должно содержать не менее 3 символов</span>
       </div>
-    <ng-container *ngIf="selectedIngredients && selectedIngredients.length">
-      <div class="badges">
+      <ng-container *ngIf="selectedIngredients && selectedIngredients.length">
+        <div class="badges">
         <span class="badge badge-pill badge-info" *ngFor="let ingredient of selectedIngredients">{{ingredient.Name}}
           <span class="delete-btn" (click)="deleteFromIngredients(ingredient.ObjectID)">x</span>
         </span>
-      </div>
-    </ng-container>
+        </div>
+      </ng-container>
     </div>
     <div class="text-center">
-      <button type="button" class="btn btn-info m-auto" (click)="getPage()">Подобрать рецепты</button>
+      <button type="button" class="btn btn-info ml-auto mr-auto mt-3" (click)="getPage()">Подобрать рецепты</button>
     </div>
   </form>
   <ng-container *ngIf="resultSet && resultSet.length">
-    <div id="carousel" class="carousel slide" data-ride="carousel" style="margin-top: 2vh;">
-      <div class="carousel-inner">
-        <div class="carousel-item" *ngFor="let recipe of resultSet, let i = index" [class.active]="i === 0">
-          <img class="d-block w-50 m-auto" [src]="recipe.image" [alt]="recipe.title">
-          <div class="carousel-caption d-none d-md-block w-50 m-auto bg-light text-dark pointer-element">
-            <h5 (click)="openRecipe(recipe.url)">{{recipe.title}}</h5>
+    <!--Карусель для больших экранов-->
+    <!--<div class="carousel-container">
+      <ngb-carousel class="d-none d-lg-block carousel" data-ride="carousel" interval="0">
+        <ng-template ngbSlide *ngFor="let slide of resultSet; index as i">
+          <div class="carousel-caption">
+            <p class="bgr-light text-dark pointer-element p-3" (click)="openRecipe(slide.url)">{{slide.title}}</p>
           </div>
-        </div>
-      </div>
-      <a class="carousel-control-prev" href="#carousel" role="button" data-slide="prev">
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="sr-only">Previous</span>
-      </a>
-      <a class="carousel-control-next" href="#carousel" role="button" data-slide="next">
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="sr-only">Next</span>
-      </a>
+          <div class="picsum-img-wrapper text-center">
+            <img class="w-50 m-auto animated" [src]="slide.image" [alt]="slide.title">
+          </div>
+        </ng-template>
+      </ngb-carousel>
+    </div>-->
+
+    <!--Карточки для больших экранов-->
+    <div class="cards-container d-none d-lg-block">
+      <ul class="cards-list">
+        <li *ngFor="let card of resultSet; index as i">
+          <div class="card pointer-element">
+            <img class="card-img-top" src="{{card.image}}" alt="{{card.title}}">
+            <div class="card-body">
+              <p class="card-text">{{card.title}}</p>
+            </div>
+          </div>
+        </li>
+      </ul>
+      <a class="cards-nav-next"></a>
+      <a class="cards-nav-previous"></a>
+    </div>
+
+    <!--Карусель для маленьких экранов без стрелок и индикаторов-->
+    <div class="carousel-container">
+      <ngb-carousel class="d-block d-sm-none" #carouselXS [showNavigationArrows]="false"
+                    [showNavigationIndicators]="false" interval="0" style="margin-top: 2rem;">
+        <ng-template ngbSlide *ngFor="let slide of resultSet; index as i">
+          <div class="carousel-caption">
+            <p class="bgr-light text-dark pointer-element p-1 mb-0" (click)="openRecipe(slide.url)">{{slide.title}}</p>
+          </div>
+          <div class="picsum-img-wrapper">
+            <img class="w-100 m-auto carousel-touch-item animated" [src]="slide.image" [alt]="slide.title">
+          </div>
+        </ng-template>
+      </ngb-carousel>
     </div>
   </ng-container>
-
 </div>

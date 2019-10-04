@@ -21,7 +21,64 @@
   margin-right: 0.5em;
 }
 
-.carousel-control-next,
-.carousel-control-prev {
-  filter: invert(100%);
+.carousel-container, .cards-container {
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+  padding: 1rem;
 }
+
+.cards-list {
+  list-style: none;
+  display: inline-flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.hidden {
+  visibility: hidden;
+}
+
+::ng-deep .card {
+  transition: all 0.5s;
+  width: 18rem;
+  margin-bottom: 1em;
+  margin-top: 1em;
+}
+
+::ng-deep .card:hover {
+  transform: scale(1.1);
+  z-index: 10;
+}
+
+::ng-deep a.carousel-control-next,
+::ng-deep a.carousel-control-prev {
+  filter: invert(100%)!important;
+  cursor: pointer;
+}
+
+::ng-deep .carousel:focus {
+  border: none;
+  outline: none;
+}
+
+.bgr-light {
+  background-color: rgba(248, 249, 250, 0.7)!important
+}
+
+/*
+.animated {
+  animation: move 1s ease-in-out 0s 1 normal;
+  -moz-animation: move 1s ease-in-out 0s 1 normal;
+  -webkit-animation: move 1s ease-in-out 0s 1 normal;
+}
+
+@keyframes move {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-300px);
+  }
+}
+*/

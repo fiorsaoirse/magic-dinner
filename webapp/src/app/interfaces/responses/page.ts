@@ -1,6 +1,6 @@
 import { IRecipe } from '../recipe';
 
-export interface IPageResponse {
+export interface IPage {
   recipes: IRecipe[];
   totalCount: number;
 }

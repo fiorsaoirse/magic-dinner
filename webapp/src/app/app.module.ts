@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -9,6 +10,7 @@ import { ErrorComponent } from './components/error/error.component';
 import { AboutComponent } from './components/about/about.component';
 import { RandomComponent } from './components/random/random.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { RecipeComponent } from './components/recipe/recipe.component';
 
 @NgModule({
   declarations: [
@@ -16,16 +18,19 @@ import { ReactiveFormsModule } from '@angular/forms';
     HomeComponent,
     ErrorComponent,
     AboutComponent,
-    RandomComponent
+    RandomComponent,
+    RecipeComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NgbModule
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [RecipeComponent]
 })
 export class AppModule {
 }

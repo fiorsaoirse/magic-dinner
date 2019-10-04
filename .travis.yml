@@ -1,7 +1,8 @@
 language: node_js
 node_js:
   - node
-script:
+before_script:
   - cd rest
+  - npm i
+script:
   - make lint
-  - make test

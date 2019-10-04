@@ -1,12 +1,14 @@
+import { IRecipeIngredient } from './recipe-ingredient';
+
 export interface IRecipe {
   title: string;
-  image: (string | null);
+  text: string[];
+  portions: string;
+  ingredients: IRecipeIngredient[];
   energy?: {
     calories?: number,
     proteins?: number,
     fat?: number,
     carbs?: number
   };
-  text: string;
-  url: string;
 }
