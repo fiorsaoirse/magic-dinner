@@ -17,7 +17,7 @@ const cabbageWithPrawns = new ShortRecipe(
 result.push(cabbageWithPrawns);
 
 const vinegret = new ShortRecipe(
-  'Винегрет из запеченных овощей с квашеной капустой',
+  'Винегрет из запеченных овощей с квашеной…',
   'https://img09.rl0.ru/eda/c285x285i/s1.eda.ru/Photos/160904132102-160914162300-p-O-vinegret-iz-zapechennyh-ovoschey-s-kvashenoy-kapustoy.jpg',
   '/recepty/salaty/vinegret-iz-zapechennyh-ovoschey-s-kvashenoy-kapustoy-49513',
 );

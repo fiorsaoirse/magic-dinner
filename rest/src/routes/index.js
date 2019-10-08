@@ -39,9 +39,10 @@ router.post('/pages', async (req, res) => {
 
     const parsedResult = JSON.parse(result);
     const html = parsedResult.Recipes;
+    const total = parseInt(parsedResult.TotalCount, 10);
     const generatedAST = ast(html);
 
-    res.json({ data: generatedAST });
+    res.json({ total, data: generatedAST });
     res.end();
   } catch (e) {
     res.status(500);

@@ -29,25 +29,11 @@
     </div>
   </form>
   <ng-container *ngIf="resultSet && resultSet.length">
-    <!--Карусель для больших экранов-->
-    <!--<div class="carousel-container">
-      <ngb-carousel class="d-none d-lg-block carousel" data-ride="carousel" interval="0">
-        <ng-template ngbSlide *ngFor="let slide of resultSet; index as i">
-          <div class="carousel-caption">
-            <p class="bgr-light text-dark pointer-element p-3" (click)="openRecipe(slide.url)">{{slide.title}}</p>
-          </div>
-          <div class="picsum-img-wrapper text-center">
-            <img class="w-50 m-auto animated" [src]="slide.image" [alt]="slide.title">
-          </div>
-        </ng-template>
-      </ngb-carousel>
-    </div>-->
-
     <!--Карточки для больших экранов-->
     <div class="cards-container d-none d-lg-block">
       <ul class="cards-list">
         <li *ngFor="let card of resultSet; index as i">
-          <div class="card pointer-element">
+          <div class="card pointer-element" (click)="openRecipe(card.url)">
             <img class="card-img-top" src="{{card.image}}" alt="{{card.title}}">
             <div class="card-body">
               <p class="card-text">{{card.title}}</p>
@@ -55,13 +41,18 @@
           </div>
         </li>
       </ul>
+
       <a class="cards-nav-next"></a>
       <a class="cards-nav-previous"></a>
+
+      <ng-container *ngIf="resultSet.length < total">
+        <input type="button" class="btn btn-info d-flex m-auto" value="Показать ещё" (click)="getPage()">
+      </ng-container>
     </div>
 
     <!--Карусель для маленьких экранов без стрелок и индикаторов-->
-    <div class="carousel-container">
-      <ngb-carousel class="d-block d-sm-none" #carouselXS [showNavigationArrows]="false"
+    <div class="carousel-container d-block d-sm-none">
+      <ngb-carousel #carouselXS [showNavigationArrows]="false"
                     [showNavigationIndicators]="false" interval="0" style="margin-top: 2rem;">
         <ng-template ngbSlide *ngFor="let slide of resultSet; index as i">
           <div class="carousel-caption">
@@ -69,6 +60,14 @@
           </div>
           <div class="picsum-img-wrapper">
             <img class="w-100 m-auto carousel-touch-item animated" [src]="slide.image" [alt]="slide.title">
+          </div>
+        </ng-template>
+        <ng-template ngbSlide *ngIf="resultSet.length < total">
+          <div class="carousel-caption">
+            <p class="bgr-light text-dark pointer-element p-1 mb-0" (click)="getPage()">Показать ещё...</p>
+          </div>
+          <div class="picsum-img-wrapper">
+            <img class="w-100 m-auto carousel-touch-item animated" src="../../../assets/FindMore.png" alt="Показать ещё...">
           </div>
         </ng-template>
       </ngb-carousel>

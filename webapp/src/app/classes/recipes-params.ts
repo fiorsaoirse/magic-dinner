@@ -3,7 +3,7 @@ import { IRecipesParams } from '../interfaces/recipes-params';
 export class RecipesParams implements IRecipesParams {
   constructor(excludedIngredients: number[], includedIngredients: number[],
               // tslint:disable-next-line:variable-name
-              tags: string[], Sorting?: string, page?: (number | null)) {
+              tags: string[], page?: (number | null), Sorting?: string) {
     this.Sorting = Sorting || 'relevance';
     this.excludedIngredients = excludedIngredients;
     this.includedIngredients = includedIngredients;

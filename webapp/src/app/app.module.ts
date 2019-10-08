@@ -11,6 +11,7 @@ import { AboutComponent } from './components/about/about.component';
 import { RandomComponent } from './components/random/random.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RecipeComponent } from './components/recipe/recipe.component';
+import { HaskeysPipe } from './pipes/haskeys.pipe';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { RecipeComponent } from './components/recipe/recipe.component';
     ErrorComponent,
     AboutComponent,
     RandomComponent,
-    RecipeComponent
+    RecipeComponent,
+    HaskeysPipe
   ],
   imports: [
     BrowserModule,

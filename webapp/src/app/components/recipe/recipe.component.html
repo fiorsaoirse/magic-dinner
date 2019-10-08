@@ -12,7 +12,7 @@
         <div class="ml-auto">{{recipe.portions}}</div>
       </div>
     </div>
-    <div class="row">
+    <div class="row" *ngIf="recipe.energy | haskeys">
       <div class="col mb-2">
         <table class="table table-sm">
           <tbody>

@@ -32,8 +32,10 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked {
   // Data
   ingredientList: IFoundIngredient[];
   selectedIngredients: IFoundIngredient[] = [];
-  resultSet: IShortRecipe[];
+  resultSet: IShortRecipe[] = [];
   maxCardInRowCount: number;
+  currentPage: (number | null) = null;
+  total: number;
 
   // Fields
   mobileCarousel: HTMLDivElement;
@@ -108,7 +110,8 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked {
         map(([startX, endX]: [number, number]) => startX - endX)
       );
     this.subs.push(swipe$.subscribe((position: number) => {
-      // If position === 0 means that it was click without swipe
+      // If the position === 0 means that it was click without swipe
+      // And if the position less than 20 pixels let's say that there was no any swipe (cause it was too short)
       if (position === 0 || Math.abs(position) < 20) return;
       const direction = position > 0 ? 'left' : 'right';
       if (direction === 'left') {
@@ -137,6 +140,8 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked {
     this.selectedIngredients.push(ingredient);
     this.ingredientList = [];
     this.ingredientsGroup.get('userSearch').reset();
+    // When you change the list of ingredients, search should return new recipes from the first page
+    this.currentPage = null;
   }
 
   /*
@@ -145,6 +150,8 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked {
   deleteFromIngredients(ingredientID: number): void {
     this.selectedIngredients = this.selectedIngredients
       .filter((curr: IFoundIngredient) => curr.ObjectID !== ingredientID);
+    // When you change the list of ingredients, search should return new recipes from the first page
+    this.currentPage = null;
   }
 
   /*
@@ -152,10 +159,15 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked {
    */
   getPage(): void {
     const includedIngredients = this.selectedIngredients.map((curr: IFoundIngredient) => curr.ObjectID);
-    const recipesParams = new RecipesParams([], includedIngredients, []);
+    const recipesParams = new RecipesParams([], includedIngredients, [],
+                                            (this.currentPage ? this.currentPage + 1 : null));
     this.postService.recipes(recipesParams)
-      .subscribe(({ data }) => {
-        this.resultSet = data;
+      .subscribe(({ data, total }) => {
+        // When you change the included ingredients array, you expect to get new result set
+        // and when you just click the "get more" button, you expect to extend the result set
+        this.resultSet = this.currentPage ? [...this.resultSet, ...data] : [...data];
+        this.total = total;
+        this.currentPage = (this.currentPage ? this.currentPage += 1 : 1);
       });
   }
 
@@ -167,5 +179,12 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked {
       const modalRef = this.modalService.open(RecipeComponent);
       modalRef.componentInstance.recipe = result;
     });
+  }
+
+  /*
+  Getting pages count.
+  */
+  getPagesCount(): void {
+
   }
 }
