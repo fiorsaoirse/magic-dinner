@@ -7,7 +7,7 @@ const fixtures = '__fixtures__';
 const oneElement = 'one-element.txt';
 const html = 'mock-get-page.txt';
 
-test('Parse HTML with one element', async () => {
+test('Parse HTML with one element and generate AST', async () => {
   const promise = new Promise((res, rej) => {
     fs.readFile(path.join(__dirname, fixtures, oneElement), 'utf-8', (err, file) => {
       if (err) rej(err);
@@ -21,7 +21,7 @@ test('Parse HTML with one element', async () => {
   expect(result).toEqual(data.slice(0, 1));
 });
 
-test('Parse HTML and generate AST', async () => {
+test('Parse HTML with some recipes and generate AST', async () => {
   const promise = new Promise((res, rej) => {
     fs.readFile(path.join(__dirname, fixtures, html), 'utf-8', (err, file) => {
       if (err) rej(err);
