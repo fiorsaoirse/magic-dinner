@@ -22,7 +22,7 @@ class TestData {
 const testData = [
   new TestData('Parse HTML with one element and generate AST', oneElement, slicedData),
   new TestData('Parse HTML with some recipes and generate AST', html, data),
-  new TestData('Parse HTML with some recipes which doesn\'t have images and generate AST', htmlWithDefault, dataWithDefaults),
+  new TestData('Parse HTML with some recipes which doesn\'t have recipes and generate AST', htmlWithDefault, dataWithDefaults),
 ];
 
 describe('Testing of generating AST', () => {

@@ -42,7 +42,7 @@ export default (html) => {
     + ' p.content-item');
   const $steps = $('li.instruction > div.instruction__wrap > span.instruction__description');
 
-  // Get recipe title
+  // Get entities title
   const recipeTitle = $recipeTitle && $recipeTitle.text().trim();
 
   const infoNodes = Array.from($info);
@@ -59,7 +59,7 @@ export default (html) => {
 
   const stepsNodes = Array.from($steps);
 
-  // Get text of recipe
+  // Get text of entities
   const text = stepsNodes.reduce((acc, step) => reduceNode((nAcc, curr) => {
     if (curr.type === 'text' && curr.data.trim() !== '' && !curr.data.trim().match(/^(\d\.)/)) { // RegExp check is
       // for not to include parsed number of step

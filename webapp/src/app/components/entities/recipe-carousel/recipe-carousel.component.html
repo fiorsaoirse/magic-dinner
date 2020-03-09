@@ -1,0 +1,14 @@
+<ngb-carousel #carouselXS [showNavigationArrows]="false"
+              [showNavigationIndicators]="false" interval="0" style="margin-top: 2rem;">
+  <ng-template ngbSlide *ngFor="let image of recipes">
+    <app-recipe-carousel-image [image]="image"></app-recipe-carousel-image>
+  </ng-template>
+  <!--<ng-template ngbSlide *ngIf="resultSet.length < total">
+    <div class="carousel-caption">
+      <p class="bgr-light text-dark pointer-element p-1 mb-0" (click)="getPage()">Показать ещё...</p>
+    </div>
+    <div class="picsum-img-wrapper">
+      <img class="w-100 m-auto carousel-touch-item animated" src="assets/FindMore.png" alt="Показать ещё...">
+    </div>
+  </ng-template>-->
+</ngb-carousel>

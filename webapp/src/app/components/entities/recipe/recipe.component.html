@@ -1,0 +1,43 @@
+<div class="modal-header">
+  <h4 class="modal-title">{{recipe.title}}</h4>
+  <button type="button" class="close" aria-label="Close" (click)="activeModal.close()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body w-auto">
+  <div class="container">
+    <div class="row">
+      <div class="col d-inline-flex mb-4">
+        <div class="">Количество порций:</div>
+        <div class="ml-auto">{{recipe.portions}}</div>
+      </div>
+    </div>
+    <div class="row" *ngIf="recipe.energy | keyvalue">
+      <div class="col mb-2">
+        <table class="table table-sm">
+          <tbody>
+          <tr class="text-center table-header">
+            <td>Калорийность (порция)</td>
+            <td>Белки</td>
+            <td>Жиры</td>
+            <td>Углеводы</td>
+          </tr>
+          <tr class="text-center font-weight-bold">
+            <td>{{recipe.energy.calories}}</td>
+            <td>{{recipe.energy.proteins}}</td>
+            <td>{{recipe.energy.fat}}</td>
+            <td>{{recipe.energy.carbs}}</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <p class="font-weight-bold">Рецепт:</p>
+  <ul class="pl-3">
+    <li *ngFor="let step of recipe.text">{{step}}</li>
+  </ul>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-outline-dark" (click)="activeModal.close()">Закрыть</button>
+</div>

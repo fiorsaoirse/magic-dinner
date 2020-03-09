@@ -5,7 +5,7 @@ import parseRecipe from '../parseRecipe';
 
 const router = express.Router();
 
-// const getRecipesCountAddress = 'https://eda.ru/RecipesCatalog/GetRecipesCount';
+const getRecipesCountAddress = 'https://eda.ru/RecipesCatalog/GetRecipesCount';
 const getPageAddress = 'https://eda.ru/RecipesCatalog/GetPage';
 const findByNameAddress = 'https://eda.ru/Ingredient/FindByName';
 const baseURL = 'https://eda.ru';
@@ -52,9 +52,16 @@ router.post('/pages', async (req, res) => {
 });
 
 router.post('/pages/count', async (req, res) => {
-  // const { body } = req;
+  const { body } = req;
   try {
-    // Something
+    const result = await request.post({
+      uri: getRecipesCountAddress,
+      form: body,
+    });
+    const data = JSON.parse(result);
+    const { total, currentUrl } = data;
+    res.json({ total, currentUrl });
+    res.end();
   } catch (e) {
     res.status(500);
     res.json({ error: e });

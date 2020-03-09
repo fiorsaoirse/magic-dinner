@@ -1,19 +1,14 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
-import { HomeComponent } from './components/home/home.component';
-import { ErrorComponent } from './components/error/error.component';
-import { RandomComponent } from './components/random/random.component';
-import { AboutComponent } from './components/about/about.component';
+import { RouterModule, Routes } from '@angular/router';
+import { HomeComponent } from './components/pages/home/home.component';
+import { AboutComponent } from './components/pages/about/about.component';
+import { ErrorComponent } from './components/pages/error/error.component';
 
 const routes: Routes = [
   {
     path: '',
     pathMatch: 'full',
     component: HomeComponent
-  },
-  {
-    path: 'random',
-    component: RandomComponent
   },
   {
     path: 'about',

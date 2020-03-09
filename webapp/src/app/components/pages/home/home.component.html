@@ -1,0 +1,48 @@
+<div class="mt-auto">
+  <!--Search panel-->
+  <app-search [label]="labels.search"
+              [actions]="actions.searchActions"
+              [template]="ingredientTemplate"
+              [selectedItems]="data.selectedIngredients"
+              (deleteFromSelected)="deleteFromSelected($event)"></app-search>
+  <div class="button-group">
+    <input type="button" class="btn btn-info ml-auto mr-auto mt-3" value="{{labels.buttons.submit}}" (click)="search()">
+    <input type="button" class="btn btn-info ml-auto mr-auto mt-3" value="{{labels.buttons.random}}" (click)="randomSearch()">
+  </div>
+  <!-- Recipes panel -->
+  <ng-container>
+    <ng-container *ngIf="data.recipes$ | async as recipes; else loading">
+      <!-- Cards for big screens -->
+      <div class="cards-container d-none d-lg-block">
+        <ul class="cards-list">
+          <li *ngFor="let card of recipes">
+            <app-recipe-card [card]="card"></app-recipe-card>
+          </li>
+        </ul>
+
+        <a class="cards-nav-next"></a>
+        <a class="cards-nav-previous"></a>
+
+        <!--<ng-container *ngIf="recipes.length < total">
+          <input type="button" class="btn btn-info d-flex m-auto" value="Показать ещё" (click)="getPage()">
+        </ng-container>-->
+      </div>
+
+      <!-- Carousel for small screens -->
+      <div class="carousel-container d-block d-sm-none">
+        <app-recipe-carousel [recipes]="recipes"></app-recipe-carousel>
+      </div>
+    </ng-container>
+  </ng-container>
+
+</div>
+
+<ng-template #ingredientTemplate let-item="item">
+  <div class="search-item pointer-element" (click)="addIngredient(item)">
+    <div>{{item.Name}}</div>
+  </div>
+</ng-template>
+
+<ng-template #loading>
+  Loading...
+</ng-template>

@@ -21,14 +21,14 @@ export class HttpSenderService {
   }
 
   get<T>(url: string, params: HttpParams = undefined): Observable<T> {
-    return this.httpClient.get<T>(`${environment.restAPI}${url}`, HttpSenderService.setOptions(params));
+    return this.httpClient.get<T>(`${environment.restApiUrl}${url}`, HttpSenderService.setOptions(params));
   }
 
   post<T>(url: string, data: unknown, params: HttpParams = undefined): Observable<T> {
-    return this.httpClient.post<T>(`${environment.restAPI}${url}`, data, HttpSenderService.setOptions(params));
+    return this.httpClient.post<T>(`${environment.restApiUrl}${url}`, data, HttpSenderService.setOptions(params));
   }
 
   delete<T>(url: string, params: HttpParams = undefined): Observable<T> {
-    return this.httpClient.delete<T>(`${environment.restAPI}${url}`, HttpSenderService.setOptions(params));
+    return this.httpClient.delete<T>(`${environment.restApiUrl}${url}`, HttpSenderService.setOptions(params));
   }
 }
