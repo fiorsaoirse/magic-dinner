@@ -1,14 +1,14 @@
-import { Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class HttpSenderService {
 
-  constructor(private httpClient: HttpClient) {
+  constructor(private httpClient: HttpClient,
+              @Inject('BASE_URL') private baseUrl: string) {
   }
 
   private static setOptions(params: HttpParams) {
@@ -21,14 +21,14 @@ export class HttpSenderService {
   }
 
   get<T>(url: string, params: HttpParams = undefined): Observable<T> {
-    return this.httpClient.get<T>(`${environment.restApiUrl}${url}`, HttpSenderService.setOptions(params));
+    return this.httpClient.get<T>(`${this.baseUrl}${url}`, HttpSenderService.setOptions(params));
   }
 
   post<T>(url: string, data: unknown, params: HttpParams = undefined): Observable<T> {
-    return this.httpClient.post<T>(`${environment.restApiUrl}${url}`, data, HttpSenderService.setOptions(params));
+    return this.httpClient.post<T>(`${this.baseUrl}${url}`, data, HttpSenderService.setOptions(params));
   }
 
   delete<T>(url: string, params: HttpParams = undefined): Observable<T> {
-    return this.httpClient.delete<T>(`${environment.restApiUrl}${url}`, HttpSenderService.setOptions(params));
+    return this.httpClient.delete<T>(`${this.baseUrl}${url}`, HttpSenderService.setOptions(params));
   }
 }

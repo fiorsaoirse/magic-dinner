@@ -17,6 +17,7 @@ import { SearchComponent } from './components/entities/search/search.component';
 import { BaseComponent } from './components/base-components/base-component/base-component.component';
 import { BadgeComponent } from './components/entities/badge/badge.component';
 import { OutsideClickDirective } from './directives/outside-click.directive';
+import { environment } from '../environments/environment';
 
 @NgModule({
   declarations: [
@@ -40,7 +41,10 @@ import { OutsideClickDirective } from './directives/outside-click.directive';
     ReactiveFormsModule,
     NgbModule
   ],
-  providers: [],
+  providers: [
+    // Provides base_url from environment as service - @Inject returns string by key 'BASE_URL'
+    { provide: 'BASE_URL', useValue: environment.restApiUrl },
+  ],
   bootstrap: [AppComponent],
   entryComponents: [RecipeComponent]
 })

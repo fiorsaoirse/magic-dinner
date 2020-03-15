@@ -1,41 +1,27 @@
-import { Directive, ElementRef, EventEmitter, NgZone, OnDestroy, OnInit, Output, } from '@angular/core';
+import { Directive, ElementRef, EventEmitter, HostListener, OnInit, Output, } from '@angular/core';
+
+/* Directive that emits an event when
+ * catches user's click outside bind element
+*/
 
 @Directive({
   selector: '[appOutsideClick]'
 })
-export class OutsideClickDirective implements OnInit, OnDestroy {
+export class OutsideClickDirective implements OnInit {
 
-  constructor(private elementRef: ElementRef, private ngZone: NgZone) {}
-
-  private eventHandler = this.onClick.bind(this);
+  constructor(private elementRef: ElementRef) {}
 
   @Output()
   outsideClick: EventEmitter<MouseEvent> = new EventEmitter<MouseEvent>();
 
-  ngOnDestroy(): void {
-    this.removeClickListener();
-  }
-
-  ngOnInit(): void {
-    this.addClickListener();
-  }
-
-  private emit(e: MouseEvent): void {
-    this.ngZone.run(() => this.outsideClick.emit(e));
-  }
-
-  private onClick(event: MouseEvent): void {
+  @HostListener('document:click', ['$event'])
+  public click(event: MouseEvent): void {
     const { target } = event;
     if (!this.elementRef.nativeElement.contains(target)) {
-      this.emit(event);
+      this.outsideClick.emit(event);
     }
   }
 
-  private addClickListener(): void {
-    this.ngZone.runOutsideAngular(() => document.addEventListener('click', this.eventHandler));
-  }
-
-  private removeClickListener(): void {
-    this.ngZone.runOutsideAngular(() => document.removeEventListener('click', this.eventHandler));
+  ngOnInit(): void {
   }
 }

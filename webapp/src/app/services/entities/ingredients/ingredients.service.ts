@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpSenderService } from '../../http-sender.service';
 import { Observable } from 'rxjs';
-import { IFindByName } from '../../../interfaces/responses/find-by-name';
 import { HttpParams } from '@angular/common/http';
+import { IFoundIngredient } from '../../../interfaces/found-ingredient';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -13,8 +14,9 @@ export class IngredientsService {
 
   private _INGREDIENTS = 'ingredients';
 
-  get(term: string): Observable<IFindByName> {
+  get(term: string): Observable<IFoundIngredient[]> {
     const params = new HttpParams().set('term', term);
-    return this.http.get<IFindByName>(`${this._INGREDIENTS}/find`, params);
+    return this.http.get<{ data: IFoundIngredient[] }>(`${this._INGREDIENTS}/find`, params)
+      .pipe(map((resp: { data: IFoundIngredient[] }) => resp.data));
   }
 }
