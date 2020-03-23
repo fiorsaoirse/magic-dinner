@@ -18,7 +18,7 @@ export class RecipesService {
   private _PAGES = 'pages';
 
   get(link: string): Observable<IRecipe> {
-    const params = new HttpParams().set('link', link);
+    const params = new HttpParams().set('link', encodeURIComponent(link));
     return this.http.get<IRecipe>(`${this._RECIPES}/get`, params);
   }
 

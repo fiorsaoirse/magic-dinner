@@ -15,11 +15,14 @@ describe('Parse page and get Recipe instance', () => {
           res(file);
         });
       });
+      try {
+        const snapshot = await promise;
+        const result = parseRecipe(snapshot);
 
-      const snapshot = await promise;
-      const result = parseRecipe(snapshot);
-
-      expect(result).toEqual(recipe);
+        expect(result).toEqual(recipe);
+      } catch (e) {
+        throw new Error(e);
+      }
     });
   });
 });

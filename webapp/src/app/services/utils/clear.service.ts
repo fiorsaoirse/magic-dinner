@@ -5,9 +5,7 @@ import { Subject } from 'rxjs';
   providedIn: 'root'
 })
 export class ClearService {
-
   constructor() {
   }
-
   clearSearch$$ = new Subject();
 }

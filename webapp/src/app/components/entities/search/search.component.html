@@ -8,7 +8,7 @@
              data-toggle="dropdown"
              formControlName="input">
       <!-- Search result container -->
-      <ng-container *ngIf="data.result$ | async as result, else loading">
+      <ng-container *ngIf="(data.result$ | async) as result">
         <ng-container *ngIf="result.length">
           <div class="search-result" appOutsideClick (outsideClick)="hide($event)">
             <ng-container *ngFor="let item of result">

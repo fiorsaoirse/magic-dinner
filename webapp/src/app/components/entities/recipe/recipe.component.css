@@ -4,7 +4,3 @@
 ::ng-deep .close:focus {
   outline: none;
 }
-
-.table-header {
-  font-size: 0.9em;
-}

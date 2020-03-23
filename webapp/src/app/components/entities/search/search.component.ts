@@ -80,7 +80,6 @@ export class SearchComponent extends BaseComponent {
             })
           )
         ),
-        map(resp => resp.data),
         tap(() => this.state.loading = false),
     );
 

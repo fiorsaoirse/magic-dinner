@@ -4,7 +4,10 @@ import Recipe from './entities/classes/recipe';
 import Ingredient from './entities/classes/ingredient';
 
 const extractValue = (node) => {
-  const data = node.children.map((child) => child.data.trim()).join('').replace(',', '.');
+  const data = node.children.map((child) => {
+    if (child.type !== 'text') return '';
+    return child.data.trim();
+  }).join('').replace(',', '.');
   return parseFloat(data);
 };
 
@@ -41,38 +44,30 @@ export default (html) => {
   const $ingredientsList = $('div.ingredients-list.layout__content-col > div.ingredients-list__content >'
     + ' p.content-item');
   const $steps = $('li.instruction > div.instruction__wrap > span.instruction__description');
-
   // Get entities title
   const recipeTitle = $recipeTitle && $recipeTitle.text().trim();
-
-  const infoNodes = Array.from($info);
-
   // Get portion count
-  const portions = infoNodes.map((node) => reduceNode((acc, curr) => {
-    // TODO: надо тут отфильтровать ноды и
-    // выдрать количество порций - редьюс не совсем подходит ['text', '', '', '']
-    if (curr.type === 'text' && curr.parent.name === 'span' && curr.parent.attribs.class.includes('js-portions-count-print')) {
-      return [...acc, curr.data.trim()];
-    }
-    return [...acc];
-  }, node, '')).filter((v) => v !== '').join('');
-
-  const stepsNodes = Array.from($steps);
-
+  const portions = Array.from($info).reduce((acc, node) => {
+    const result = reduceNode((nAcc, currentNode) => {
+      if (currentNode.type === 'text' && currentNode.parent.name === 'span' && currentNode.parent.attribs.class.includes('js-portions-count-print')) {
+        return currentNode.data.trim();
+      }
+      return nAcc;
+    }, node, '');
+    if (!result) return acc;
+    return acc.concat(result);
+  }, '');
   // Get text of entities
-  const text = stepsNodes.reduce((acc, step) => reduceNode((nAcc, curr) => {
-    if (curr.type === 'text' && curr.data.trim() !== '' && !curr.data.trim().match(/^(\d\.)/)) { // RegExp check is
+  const text = Array.from($steps).reduce((acc, step) => reduceNode((nAcc, curr) => {
+    if (curr.type === 'text' && curr.data.trim() !== '' && !curr.data.trim().match(/^(\d+\.)/)) { // RegExp check is
       // for not to include parsed number of step
       return [...nAcc, curr.data.trim()];
     }
     return nAcc;
   }, step, acc),
   []);
-
-  const nutritionList = Array.from($nutritionList);
-
   // Get nutrition params
-  const energy = nutritionList.reduce((acc, nutrition) => {
+  const energy = Array.from($nutritionList).reduce((acc, nutrition) => {
     const childTags = nutrition.children.filter((child) => child.type === 'tag');
     const typeNode = childTags.find((child) => child.attribs.class.includes('nutrition__name'));
     const valueNode = childTags.find((child) => child.attribs.class.includes('nutrition__weight'));
@@ -80,11 +75,8 @@ export default (html) => {
     const func = energyType[type];
     return func(acc, valueNode);
   }, {});
-
-  const ingredientsList = Array.from($ingredientsList);
-
   // Get ingredients
-  const ingredients = ingredientsList.reduce((acc, curr) => {
+  const ingredients = Array.from($ingredientsList).reduce((acc, curr) => {
     const dataIngredient = curr.attribs['data-ingredient-object'];
     try {
       const parsedDataIngredient = JSON.parse(dataIngredient);
@@ -92,6 +84,7 @@ export default (html) => {
         parsedDataIngredient.amount.trim());
       return [...acc, ingredient];
     } catch (e) {
+      console.error(`Error during parsing ingredients: ${e}`);
       throw new Error(e);
     }
   }, []);

@@ -19,10 +19,6 @@
             <app-recipe-card [card]="card"></app-recipe-card>
           </li>
         </ul>
-
-        <a class="cards-nav-next"></a>
-        <a class="cards-nav-previous"></a>
-
         <!--<ng-container *ngIf="recipes.length < total">
           <input type="button" class="btn btn-info d-flex m-auto" value="Показать ещё" (click)="getPage()">
         </ng-container>-->
@@ -34,7 +30,6 @@
       </div>
     </ng-container>
   </ng-container>
-
 </div>
 
 <ng-template #ingredientTemplate let-item="item">

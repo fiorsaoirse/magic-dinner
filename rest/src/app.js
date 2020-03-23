@@ -6,8 +6,9 @@ import cookieParser from 'cookie-parser';
 import bodyParser from 'body-parser';
 import cors from 'cors';
 
-import routes from './routes/index';
-import users from './routes/users';
+import ingredientRoutes from './routes/ingredients';
+import pageRoutes from './routes/pages';
+import recipeRoutes from './routes/recipes';
 
 const app = express();
 
@@ -32,8 +33,9 @@ const corsOptions = {
 app.use(cors(corsOptions));
 app.options('*', cors());
 
-app.use('/', routes);
-app.use('/users', users);
+app.use('/ingredients', ingredientRoutes);
+app.use('/pages', pageRoutes);
+app.use('/recipes', recipeRoutes);
 
 // / error handlers
 

@@ -8,7 +8,7 @@ export const filterNode = (func, node) => {
     return null;
   }
   const { children } = node;
-  return { ...node, children: children.map((c) => filterNode(func, c)).filter((v) => v) }; // Last
+  return { ...node, children: children.map((c) => filterNode(func, c)).filter(Boolean) }; // Last
   // filter is for deleting null-s from result set
 };
 
