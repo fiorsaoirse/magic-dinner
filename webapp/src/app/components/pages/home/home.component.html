@@ -1,4 +1,4 @@
-<div class="mt-auto">
+<div class="mt-auto" appScrollToTop>
   <!--Search panel-->
   <app-search [label]="labels.search"
               [actions]="actions.searchActions"
@@ -11,17 +11,17 @@
   </div>
   <!-- Recipes panel -->
   <ng-container>
-    <ng-container *ngIf="data.recipes$ | async as recipes; else loading">
+    <ng-container *ngIf="data.recipes as recipes;">
       <!-- Cards for big screens -->
       <div class="cards-container d-none d-lg-block">
         <ul class="cards-list">
-          <li *ngFor="let card of recipes">
+          <li *ngFor="let card of recipes; trackBy: trackByFn">
             <app-recipe-card [card]="card"></app-recipe-card>
           </li>
         </ul>
-        <!--<ng-container *ngIf="recipes.length < total">
-          <input type="button" class="btn btn-info d-flex m-auto" value="Показать ещё" (click)="getPage()">
-        </ng-container>-->
+        <ng-container *ngIf="data.recipes.length < data.totalRecipesCount">
+          <input type="button" class="btn btn-info d-flex m-auto" value="Показать ещё" (click)="showMore()">
+        </ng-container>
       </div>
 
       <!-- Carousel for small screens -->
@@ -36,8 +36,4 @@
   <div class="search-item pointer-element" (click)="addIngredient(item)">
     <div>{{item.Name}}</div>
   </div>
-</ng-template>
-
-<ng-template #loading>
-  Loading...
 </ng-template>

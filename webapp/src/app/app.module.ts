@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -16,8 +17,9 @@ import { RecipeCardComponent } from './components/entities/recipe-card/recipe-ca
 import { SearchComponent } from './components/entities/search/search.component';
 import { BaseComponent } from './components/base-components/base-component/base-component.component';
 import { BadgeComponent } from './components/entities/badge/badge.component';
-import { OutsideClickDirective } from './directives/outside-click.directive';
+import { OutsideClickDirective } from './directives/outside-click/outside-click.directive';
 import { environment } from '../environments/environment';
+import { ScrollToTopDirective } from './directives/scroll-to-top/scroll-to-top.directive';
 
 @NgModule({
   declarations: [
@@ -33,13 +35,15 @@ import { environment } from '../environments/environment';
     BaseComponent,
     BadgeComponent,
     OutsideClickDirective,
+    ScrollToTopDirective,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
     ReactiveFormsModule,
-    NgbModule
+    NgbModule,
+    FontAwesomeModule
   ],
   providers: [
     // Provides base_url from environment as service - @Inject returns string by key 'BASE_URL'

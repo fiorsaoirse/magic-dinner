@@ -17,9 +17,7 @@ export class RecipeCarouselImageComponent implements OnInit {
   @Input()
     image: IShortRecipe;
 
-  ngOnInit() {
-    console.log('carousel image init');
-  }
+  ngOnInit() {}
 
   openRecipe (url: string): void {
     this.recipesService.get(url).subscribe((result: IRecipe) => {

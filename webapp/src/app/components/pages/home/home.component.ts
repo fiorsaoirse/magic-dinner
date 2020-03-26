@@ -46,7 +46,8 @@ interface Actions {
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css']
+  styleUrls: ['./home.component.css'],
+  // changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class HomeComponent extends BaseComponent {
 
@@ -72,9 +73,9 @@ export class HomeComponent extends BaseComponent {
 
   // App data
   private data: Data = {
-    selectedIngredients: null,
+    selectedIngredients: [],
     recipes$: null,
-    recipes: null,
+    recipes: [],
     totalRecipesCount: null,
   };
 
@@ -101,8 +102,7 @@ export class HomeComponent extends BaseComponent {
   }
 
   public addIngredient(ingredient: IFoundIngredient): void {
-    this.data.selectedIngredients = this.data.selectedIngredients ?
-      [...this.data.selectedIngredients, ingredient] :  [ingredient] ;
+    this.data.selectedIngredients = [...this.data.selectedIngredients, ingredient];
     // When user changes the list of selected ingredients, the search should return new recipes from the first page
     if (this.state.currentPage) {
       this.state.currentPage = null;
@@ -129,14 +129,48 @@ export class HomeComponent extends BaseComponent {
   }
 
   public search(): void {
-    const currentPage = this.state.currentPage ? this.state.currentPage + 1 : this.state.currentPage;
     this.state.loading = true;
-    this.data.recipes$ = this.getRecipes(currentPage)
+    // Eda.ru throws an error when page is 0, so init value of current page have to be null
+    this.state.currentPage = null;
+    // Can't use async pipe in template, cause angular re-renders the whole result list instead of its changed part
+    // And with ngIf directive hides previous result
+    // (when products$ haven't received Observable yet) than shows it again from the top of block
+    const searchSubscription = this.getRecipes(this.state.currentPage)
       .pipe(
-        // TODO: подгрузка данных???
-        map((response: IListRecipes) => response.data),
-        tap(() => this.state.loading = false),
-      );
+        map((response: IListRecipes) => {
+          this.data.totalRecipesCount = response.total;
+          return response.data;
+        }),
+        tap(() => {
+          this.state.loading = false;
+          this.state.currentPage = 1;
+        }),
+        catchError((err) => {
+          console.error(err);
+          return of([]);
+        })
+      ).subscribe((result: IShortRecipe[]) => this.data.recipes = result);
+
+    this.addSubscription(searchSubscription);
+  }
+
+  public showMore(): void {
+    this.state.loading = true;
+    this.state.currentPage += 1;
+    const showMoreSubscription = this.getRecipes(this.state.currentPage)
+        .pipe(
+          map((response: IListRecipes) => response.data),
+          catchError((err) => {
+            console.error(err);
+            return of([]);
+          })
+        ).subscribe((result: IShortRecipe[]) => this.data.recipes = [...this.data.recipes, ...result]);
+
+    this.addSubscription(showMoreSubscription);
+  }
+
+  public trackByFn(index: number, item: IShortRecipe) {
+    return `${index}-${item.title}`;
   }
 
   // TODO: add loading
@@ -164,10 +198,10 @@ export class HomeComponent extends BaseComponent {
         }),
         tap(() => this.state.loading = false),
         switchMap((result: IShortRecipe) => this.recipesService.get(result.url).pipe(
-            catchError((err)  => {
-              console.error(err);
-              return of(null);
-            }))
+          catchError((err) => {
+            console.error(err);
+            return of(null);
+          }))
         ),
       )
       .subscribe((result: IRecipe | null) => {
