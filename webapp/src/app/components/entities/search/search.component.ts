@@ -6,12 +6,12 @@ import { catchError, debounceTime, distinctUntilChanged, map, skipWhile, switchM
 import { ClearService } from '../../../services/utils/clear.service';
 
 interface Data {
-  result$: Observable<any>;
-  result: any[];
+  result$: Observable<any> | null;
+  result: any[] | null;
 }
 
 interface State {
-  form: FormGroup;
+  form?: FormGroup;
   loading: boolean;
 }
 
@@ -30,66 +30,70 @@ export interface SearchUIData {
   styleUrls: ['./search.component.css']
 })
 export class SearchComponent extends BaseComponent {
+  private data: Data;
+  private state: State;
 
   constructor(private clearService: ClearService) {
     super();
+    // UI state
+    this.state = {
+      loading: false,
+    };
+    // App data
+    this.data = {
+      result$: null,
+      result: null,
+    };
   }
-
-  // App data
-  data: Data = {
-    result$: null,
-    result: null,
-  };
-
-  // UI state
-  state: State = {
-    form: null,
-    loading: false,
-  };
 
   // UI data
   @Input()
-    label: SearchUIData;
+  label?: SearchUIData;
   @Input()
-    actions: SearchActions;
+  actions?: SearchActions;
   @Input()
-    selectedItems: any[];
+  selectedItems?: any[];
   @Input()
-    template: TemplateRef<any>;
+  template?: TemplateRef<any>;
   @Output()
-    deleteFromSelected: EventEmitter<number> = new EventEmitter<number>();
+  deleteFromSelected: EventEmitter<number> = new EventEmitter<number>();
 
   init() {
     this.state.form = new FormGroup({
       input: new FormControl(null),
     });
-
+    if (!this.actions) {
+      throw new Error(`The action for input field valueChanges is undefined`);
+    }
     this.data.result$ = this.input.valueChanges
       .pipe(
         debounceTime(500),
         distinctUntilChanged(),
-        skipWhile((value: string) => value.trim().length < 3),
         map((value: string) => value.trim().toLowerCase()),
+        skipWhile((value: string) => value.length < 3),
         map((value: string) => encodeURIComponent(value)),
         tap(() => this.state.loading = true),
-        switchMap((value: string) => this.actions.load(value)
-          .pipe(
-            catchError((err) => {
-              console.error(`There is an error: ${err}.`);
-              return of({ data: [] });
-            })
-          )
+        switchMap((value: string) => {
+          if (!this.actions) return of({ data: [] });
+          return this.actions.load(value)
+              .pipe(
+                catchError((err) => {
+                  console.error(`Error in evaluating action: ${err}.`);
+                  return of({ data: [] });
+                })
+              );
+        }
         ),
         tap(() => this.state.loading = false),
-    );
+      );
 
     const clearInputSub = this.clearService.clearSearch$$.subscribe((nextValue: any) => {
       if (nextValue === null) {
-        this.input.reset();
-        this.data.result$ = concat(
+        this.input && this.input.reset();
+        this.data.result$ = concat([
           of([]),
           this.data.result$
-        );
+        ]);
       }
     });
 
@@ -109,6 +113,10 @@ export class SearchComponent extends BaseComponent {
   }
 
   get input(): AbstractControl {
-    return this.state.form.get('input');
+    const control = this.state.form && this.state.form.get('input');
+    if (!control) {
+      throw new Error(`The form doesn't have control "input"`);
+    }
+    return control;
   }
 }

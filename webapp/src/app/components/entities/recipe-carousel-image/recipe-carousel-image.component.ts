@@ -15,7 +15,7 @@ export class RecipeCarouselImageComponent implements OnInit {
   constructor(private modalService: NgbModal, private recipesService: RecipesService) { }
 
   @Input()
-    image: IShortRecipe;
+    image?: IShortRecipe;
 
   ngOnInit() {}
 

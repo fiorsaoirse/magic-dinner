@@ -20,7 +20,7 @@ const routes: Routes = [
   },
   {
     path: '**',
-    redirectTo: 'error/3',
+    redirectTo: 'error/404',
   }
 ];
 

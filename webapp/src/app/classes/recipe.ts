@@ -2,7 +2,8 @@ import { IRecipe } from '../interfaces/recipe';
 import { IRecipeIngredient } from '../interfaces/recipe-ingredient';
 
 export class Recipe implements IRecipe {
-  constructor(title, portions, text, ingredients, calories, proteins, fat, carbs) {
+  constructor(title: string, portions: string, text: string[], ingredients: IRecipeIngredient[],
+              calories: number, proteins: number, fat: number, carbs: number) {
     this.title = title;
     this.text = text;
     this.portions = portions;

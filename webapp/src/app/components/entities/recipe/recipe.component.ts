@@ -10,7 +10,7 @@ import { IRecipe } from '../../../interfaces/recipe';
 export class RecipeComponent {
 
   @Input()
-  recipe: IRecipe;
+  recipe?: IRecipe;
 
   constructor(public activeModal: NgbActiveModal) {}
 }

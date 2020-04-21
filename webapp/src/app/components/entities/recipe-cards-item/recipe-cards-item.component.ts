@@ -8,17 +8,17 @@ import { BaseComponent } from '../../base-components/base-component/base-compone
 
 @Component({
   selector: 'app-recipe-card',
-  templateUrl: './recipe-card.component.html',
-  styleUrls: ['./recipe-card.component.css']
+  templateUrl: './recipe-cards-item.component.html',
+  styleUrls: ['./recipe-cards-item.component.css']
 })
-export class RecipeCardComponent extends BaseComponent {
+export class RecipeCardsItemComponent extends BaseComponent {
 
   constructor(private modalService: NgbModal, private recipesService: RecipesService) {
     super();
   }
 
   @Input()
-    card: IShortRecipe;
+    card?: IShortRecipe;
 
   ngOnInit() {
   }

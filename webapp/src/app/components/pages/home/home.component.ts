@@ -15,11 +15,12 @@ import { BaseComponent } from '../../base-components/base-component/base-compone
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { IRecipe } from '../../../interfaces/recipe';
 import { RecipeComponent } from '../../entities/recipe/recipe.component';
+import { INgxLoadingConfig } from 'ngx-loading';
 
 interface State {
   loading: boolean;
   subscriptions: Subscription[];
-  currentPage: number;
+  currentPage: number | null;
   constants: {
     [key: string]: number;
   };
@@ -27,9 +28,9 @@ interface State {
 
 interface Data {
   selectedIngredients: IFoundIngredient[];
-  recipes$: Observable<IShortRecipe[]>;
+  recipes$: Observable<IShortRecipe[]> | null;
   recipes: IShortRecipe[];
-  totalRecipesCount: number;
+  totalRecipesCount: number | null;
 }
 
 interface Labels {
@@ -40,59 +41,69 @@ interface Labels {
 }
 
 interface Actions {
-  searchActions: SearchActions;
+  searchActions: SearchActions | null;
 }
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css'],
-  // changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class HomeComponent extends BaseComponent {
+  private utils: Utils;
+  private state: State;
+  private data: Data;
+  private labels: Labels;
+  private actions: Actions;
+  private spinnerConfig: INgxLoadingConfig;
 
   constructor(private ingredientService: IngredientsService,
               private recipesService: RecipesService,
               private clearService: ClearService,
               private modalService: NgbModal) {
     super();
+    this.utils = Utils.getUtils();
+    // UI data
+    this.state = {
+      loading: false,
+      subscriptions: [],
+      currentPage: null,
+      constants: {
+        recipesPerPage: 14,
+        min: 1,
+      }
+    };
+    // App data
+    this.data = {
+      selectedIngredients: [],
+      recipes$: null,
+      recipes: [],
+      totalRecipesCount: null,
+    };
+    // UI Labels
+    this.labels = {
+      search: {
+        question: 'Какие продукты есть в холодильнике?',
+        title: '* Название должно содержать не менее 3 символов',
+      },
+      buttons: {
+        submit: 'Поиск',
+        random: 'Случайный рецепт',
+      }
+    };
+    // Actions
+    this.actions = {
+      searchActions: null,
+    };
+    // Spinner config
+    this.spinnerConfig = {
+      fullScreenBackdrop: true,
+      primaryColour: '#117a8b',
+      secondaryColour: '#117a8b',
+      tertiaryColour: '#117a8b',
+      animationType: 'circleSwish',
+    };
   }
-
-  private utils = Utils.getUtils();
-
-  // UI data
-  private state: State = {
-    loading: false,
-    subscriptions: null,
-    currentPage: null,
-    constants: {
-      recipesPerPage: 14,
-      min: 1,
-    }
-  };
-
-  // App data
-  private data: Data = {
-    selectedIngredients: [],
-    recipes$: null,
-    recipes: [],
-    totalRecipesCount: null,
-  };
-
-  private labels: Labels = {
-    search: {
-      question: 'Какие продукты есть в холодильнике?',
-      title: '* Название должно содержать не менее 3 символов',
-    },
-    buttons: {
-      submit: 'Поиск',
-      random: 'Случайный рецепт',
-    }
-  };
-
-  private actions: Actions = {
-    searchActions: null,
-  };
 
   public ngOnInit(): void {
     // Actions initialization
@@ -135,7 +146,8 @@ export class HomeComponent extends BaseComponent {
     // Can't use async pipe in template, cause angular re-renders the whole result list instead of its changed part
     // And with ngIf directive hides previous result
     // (when products$ haven't received Observable yet) than shows it again from the top of block
-    const searchSubscription = this.getRecipes(this.state.currentPage)
+    const { currentPage } = this.state;
+    const searchSubscription = this.getRecipes(currentPage)
       .pipe(
         map((response: IListRecipes) => {
           this.data.totalRecipesCount = response.total;
@@ -143,7 +155,7 @@ export class HomeComponent extends BaseComponent {
         }),
         tap(() => {
           this.state.loading = false;
-          this.state.currentPage = 1;
+          this.incrementCurrentPage();
         }),
         catchError((err) => {
           console.error(err);
@@ -156,8 +168,9 @@ export class HomeComponent extends BaseComponent {
 
   public showMore(): void {
     this.state.loading = true;
-    this.state.currentPage += 1;
-    const showMoreSubscription = this.getRecipes(this.state.currentPage)
+    this.incrementCurrentPage();
+    const { currentPage } = this.state;
+    const showMoreSubscription = this.getRecipes(currentPage)
         .pipe(
           map((response: IListRecipes) => response.data),
           catchError((err) => {
@@ -169,11 +182,6 @@ export class HomeComponent extends BaseComponent {
     this.addSubscription(showMoreSubscription);
   }
 
-  public trackByFn(index: number, item: IShortRecipe) {
-    return `${index}-${item.title}`;
-  }
-
-  // TODO: add loading
   public randomSearch() {
     // Eda.ru can't load page without ingredients, it throws 500 error
     if (!this.data.selectedIngredients) {
@@ -196,13 +204,13 @@ export class HomeComponent extends BaseComponent {
           const randomIndex = this.utils.getRandomNumber(firstIndex, this.state.constants.recipesPerPage);
           return recipes[randomIndex];
         }),
-        tap(() => this.state.loading = false),
         switchMap((result: IShortRecipe) => this.recipesService.get(result.url).pipe(
           catchError((err) => {
             console.error(err);
             return of(null);
           }))
         ),
+        tap(() => this.state.loading = false),
       )
       .subscribe((result: IRecipe | null) => {
         if (!result) return;
@@ -213,5 +221,10 @@ export class HomeComponent extends BaseComponent {
 
   public deleteFromSelected(id: number): void {
     this.data.selectedIngredients = this.data.selectedIngredients.filter((s: IFoundIngredient) => s.ObjectID !== id);
+  }
+
+  private incrementCurrentPage(): void {
+    const { currentPage } = this.state;
+    this.state.currentPage = currentPage ? currentPage + 1 : 1;
   }
 }

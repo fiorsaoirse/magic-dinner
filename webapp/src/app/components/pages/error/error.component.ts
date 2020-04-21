@@ -8,17 +8,19 @@ import { ErrorCodes } from '../../../objects/error-codes.enum';
   styleUrls: ['./error.component.css']
 })
 export class ErrorComponent implements OnInit {
+  private errorDescription?: string;
+  private errorCode?: string;
 
   constructor(private activatedRoute: ActivatedRoute) {
   }
 
-  errorDescription: string;
-  errorCode: string;
-
   ngOnInit() {
-    let errorCode = ErrorCodes[this.activatedRoute.snapshot.paramMap.get('errorCode')];
-    errorCode = ErrorCodes[errorCode];
-    switch (errorCode) {
+    const code = this.activatedRoute.snapshot.paramMap.get('errorCode');
+    if (!code) {
+      throw new Error(`Route doesn't contains param "errorCode"`);
+    }
+    this.errorCode = code;
+    switch (code) {
       case ErrorCodes.AUTHENTICATION_ERROR:
         this.errorDescription = 'Ошибка аутентификации';
         break;
@@ -27,7 +29,6 @@ export class ErrorComponent implements OnInit {
         break;
       case ErrorCodes.NOT_FOUND:
         this.errorDescription = 'Страница не найдена';
-        this.errorCode = '404';
         break;
       default:
         this.errorDescription = 'Неизвестная ошибка';

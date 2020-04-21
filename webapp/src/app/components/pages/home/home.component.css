@@ -21,14 +21,6 @@
   padding: 1rem;
 }
 
-.cards-list {
-  list-style: none;
-  display: inline-flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: flex-start;
-}
-
 .hidden {
   visibility: hidden;
 }

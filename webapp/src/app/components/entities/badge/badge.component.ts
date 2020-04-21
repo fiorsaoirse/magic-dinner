@@ -11,7 +11,7 @@ export class BadgeComponent implements OnInit {
   constructor() { }
 
   @Input()
-    item: IFoundIngredient;
+    item?: IFoundIngredient;
 
   @Output()
     deleteById: EventEmitter<number> = new EventEmitter<number>();

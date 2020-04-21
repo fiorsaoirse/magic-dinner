@@ -1,7 +1,7 @@
 import { IShortRecipe } from '../interfaces/short-recipe';
 
 export class ShortRecipe implements IShortRecipe {
-  constructor(title, image, url) {
+  constructor(title: string, image: string, url: string) {
     this.title = title;
     this.image = image;
     this.url = url;

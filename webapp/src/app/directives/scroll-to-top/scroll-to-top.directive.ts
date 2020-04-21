@@ -8,7 +8,7 @@ import { ScrollService } from '../../services/utils/scroll.service';
 export class ScrollToTopDirective implements OnInit, OnDestroy {
 
   constructor(private elementRef: ElementRef, private scrollService: ScrollService) { }
-  private sub: Subscription;
+  private sub!: Subscription;
 
   ngOnInit(): void {
     this.sub = this.scrollService.getScrollActions().subscribe((scroll: boolean) => {

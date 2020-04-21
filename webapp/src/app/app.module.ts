@@ -13,13 +13,15 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { RecipeComponent } from './components/entities/recipe/recipe.component';
 import { RecipeCarouselImageComponent } from './components/entities/recipe-carousel-image/recipe-carousel-image.component';
 import { RecipeCarouselComponent } from './components/entities/recipe-carousel/recipe-carousel.component';
-import { RecipeCardComponent } from './components/entities/recipe-card/recipe-card.component';
+import { RecipeCardsItemComponent } from './components/entities/recipe-cards-item/recipe-cards-item.component';
 import { SearchComponent } from './components/entities/search/search.component';
 import { BaseComponent } from './components/base-components/base-component/base-component.component';
 import { BadgeComponent } from './components/entities/badge/badge.component';
 import { OutsideClickDirective } from './directives/outside-click/outside-click.directive';
 import { environment } from '../environments/environment';
 import { ScrollToTopDirective } from './directives/scroll-to-top/scroll-to-top.directive';
+import { NgxLoadingModule } from 'ngx-loading';
+import { RecipeCardsComponent } from './components/entities/recipe-cards/recipe-cards.component';
 
 @NgModule({
   declarations: [
@@ -30,12 +32,14 @@ import { ScrollToTopDirective } from './directives/scroll-to-top/scroll-to-top.d
     RecipeComponent,
     RecipeCarouselImageComponent,
     RecipeCarouselComponent,
-    RecipeCardComponent,
+    RecipeCardsItemComponent,
     SearchComponent,
     BaseComponent,
     BadgeComponent,
     OutsideClickDirective,
     ScrollToTopDirective,
+    RecipeCardsItemComponent,
+    RecipeCardsComponent,
   ],
   imports: [
     BrowserModule,
@@ -43,7 +47,8 @@ import { ScrollToTopDirective } from './directives/scroll-to-top/scroll-to-top.d
     HttpClientModule,
     ReactiveFormsModule,
     NgbModule,
-    FontAwesomeModule
+    FontAwesomeModule,
+    NgxLoadingModule
   ],
   providers: [
     // Provides base_url from environment as service - @Inject returns string by key 'BASE_URL'

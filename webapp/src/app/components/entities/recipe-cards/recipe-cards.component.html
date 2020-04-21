@@ -1,0 +1,8 @@
+<ul class="cards-list">
+  <li *ngFor="let card of recipes; trackBy: trackByFn">
+    <app-recipe-card [card]="card"></app-recipe-card>
+  </li>
+</ul>
+<ng-container *ngIf="recipes.length < totalRecipesCount">
+  <input type="button" class="btn btn-info d-flex m-auto" value="Показать ещё" (click)="emitShowMore()">
+</ng-container>
