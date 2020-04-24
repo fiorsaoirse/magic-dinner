@@ -1,0 +1,56 @@
+.message {
+  top: 0.5rem;
+  right: 0.5rem;
+}
+
+.fade-out {
+  animation: fadeOut linear 5s;
+  -webkit-animation: fadeOut linear 5s;
+  -moz-animation: fadeOut linear 5s;
+  -o-animation: fadeOut linear 5s;
+  -ms-animation: fadeOut linear 5s;
+}
+@keyframes fadeOut {
+  0% {
+    opacity:1;
+  }
+  100% {
+    opacity:0;
+  }
+}
+
+@-moz-keyframes fadeOut {
+  0% {
+    opacity:1;
+  }
+  100% {
+    opacity:0;
+  }
+}
+
+@-webkit-keyframes fadeOut {
+  0% {
+    opacity:1;
+  }
+  100% {
+    opacity:0;
+  }
+}
+
+@-o-keyframes fadeOut {
+  0% {
+    opacity:1;
+  }
+  100% {
+    opacity:0;
+  }
+}
+
+@-ms-keyframes fadeOut {
+  0% {
+    opacity:1;
+  }
+  100% {
+    opacity:0;
+  }
+}

@@ -16,6 +16,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { IRecipe } from '../../../interfaces/recipe';
 import { RecipeComponent } from '../../entities/recipe/recipe.component';
 import { INgxLoadingConfig } from 'ngx-loading';
+import { NotificationService } from '../../../services/utils/notification.service';
 
 interface State {
   loading: boolean;
@@ -60,6 +61,7 @@ export class HomeComponent extends BaseComponent {
   constructor(private ingredientService: IngredientsService,
               private recipesService: RecipesService,
               private clearService: ClearService,
+              private notificationService: NotificationService,
               private modalService: NgbModal) {
     super();
     this.utils = Utils.getUtils();
@@ -159,6 +161,7 @@ export class HomeComponent extends BaseComponent {
         }),
         catchError((err) => {
           console.error(err);
+          this.notificationService.addErrorMessage('Упс, что-то пошло не так! Попробуйте снова!');
           return of([]);
         })
       ).subscribe((result: IShortRecipe[]) => this.data.recipes = result);

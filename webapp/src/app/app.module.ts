@@ -22,6 +22,7 @@ import { environment } from '../environments/environment';
 import { ScrollToTopDirective } from './directives/scroll-to-top/scroll-to-top.directive';
 import { NgxLoadingModule } from 'ngx-loading';
 import { RecipeCardsComponent } from './components/entities/recipe-cards/recipe-cards.component';
+import { NotificationComponent } from './components/entities/notification/notification.component';
 
 @NgModule({
   declarations: [
@@ -40,6 +41,7 @@ import { RecipeCardsComponent } from './components/entities/recipe-cards/recipe-
     ScrollToTopDirective,
     RecipeCardsItemComponent,
     RecipeCardsComponent,
+    NotificationComponent,
   ],
   imports: [
     BrowserModule,
