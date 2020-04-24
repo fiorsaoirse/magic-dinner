@@ -90,10 +90,13 @@ export class SearchComponent extends BaseComponent {
     const clearInputSub = this.clearService.clearSearch$$.subscribe((nextValue: any) => {
       if (nextValue === null) {
         this.input && this.input.reset();
-        this.data.result$ = concat([
+        if (!this.data.result$) {
+          throw new Error('Previous data result is null');
+        }
+        this.data.result$ = concat(
           of([]),
           this.data.result$
-        ]);
+        );
       }
     });
 

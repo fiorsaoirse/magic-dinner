@@ -176,6 +176,7 @@ export class HomeComponent extends BaseComponent {
     const showMoreSubscription = this.getRecipes(currentPage)
         .pipe(
           map((response: IListRecipes) => response.data),
+          tap(() => this.state.loading = false),
           catchError((err) => {
             console.error(err);
             return of([]);
@@ -187,8 +188,9 @@ export class HomeComponent extends BaseComponent {
 
   public randomSearch() {
     // Eda.ru can't load page without ingredients, it throws 500 error
-    if (!this.data.selectedIngredients) {
-      console.error('No selected');
+    if (!this.data.selectedIngredients.length) {
+      console.error('No selected ingredients');
+      this.notificationService.addErrorMessage('Нет выбранных продуктов!');
       return;
     }
     this.state.loading = true;
