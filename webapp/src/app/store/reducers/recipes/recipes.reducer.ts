@@ -6,6 +6,7 @@ import {
 } from '../../actions/recipes/recipes.get.action';
 import { createReducer, on } from '@ngrx/store';
 import { IRecipe } from '../../../interfaces/recipe';
+import { recipeClear } from '../../actions/recipes/recipes.clear.action';
 
 export interface IRecipesState {
   loadedRecipes: IShortRecipe[];
@@ -24,25 +25,22 @@ const initialState: IRecipesState = {
 export const recipesReducer = createReducer(
   initialState,
   on(recipesGetSuccess, (state, { payload }) => {
-    const { data, total } = payload;
-    const { currentPage, recipeToShow, loadedRecipes } = state;
+    const { data } = payload;
+    const { currentPage, loadedRecipes } = state;
     const recipes = currentPage === null ? data : [...loadedRecipes, ...data];
     const nextPage = currentPage === null ? 1 : currentPage + 1;
     return({
-      total,
-      recipeToShow,
+      ...state,
       currentPage: nextPage,
       loadedRecipes: recipes,
     });
   }),
   on(recipesGetFailure, state => state),
   on(recipesGetRandomSuccess, (state, { payload }) => {
-    const { currentPage, loadedRecipes, total } = state;
     return ({
-      currentPage,
-      loadedRecipes,
-      total,
+      ...state,
       recipeToShow: payload,
     });
-  })
+  }),
+  on(recipeClear, state  => ({ ...state, recipeToShow: null }))
 );

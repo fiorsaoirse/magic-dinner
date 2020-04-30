@@ -17,9 +17,8 @@ const initialState: IIngredientsState = {
 export const ingredientsReducer = createReducer(
   initialState,
   on(ingredientGetSuccess, (state, { payload }) => {
-    const { selected } = state;
     return ({
-      selected,
+      ...state,
       found: payload,
     });
   }),
@@ -32,9 +31,9 @@ export const ingredientsReducer = createReducer(
     });
   }),
   on(ingredientRemove, (state, { id }) => {
-    const { selected, found } = state;
+    const { selected } = state;
     return ({
-      found,
+      ...state,
       selected: selected.filter(element => element.ObjectID !== id),
     });
   })
