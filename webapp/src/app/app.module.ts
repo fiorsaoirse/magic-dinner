@@ -23,6 +23,11 @@ import { ScrollToTopDirective } from './directives/scroll-to-top/scroll-to-top.d
 import { NgxLoadingModule } from 'ngx-loading';
 import { RecipeCardsComponent } from './components/entities/recipe-cards/recipe-cards.component';
 import { NotificationComponent } from './components/entities/notification/notification.component';
+import { StoreModule } from '@ngrx/store';
+import { appReducer } from './store/reducers';
+import { EffectsModule } from '@ngrx/effects';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { rootEffects } from './store/effects';
 
 @NgModule({
   declarations: [
@@ -50,7 +55,10 @@ import { NotificationComponent } from './components/entities/notification/notifi
     ReactiveFormsModule,
     NgbModule,
     FontAwesomeModule,
-    NgxLoadingModule
+    NgxLoadingModule,
+    StoreModule.forRoot(appReducer),
+    EffectsModule.forRoot(rootEffects),
+    environment.production ? [] : StoreDevtoolsModule.instrument()
   ],
   providers: [
     // Provides base_url from environment as service - @Inject returns string by key 'BASE_URL'

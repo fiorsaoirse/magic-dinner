@@ -1,8 +1,8 @@
 import {
   ChangeDetectionStrategy,
+  ChangeDetectorRef,
   Component,
   ElementRef,
-  Input,
   OnChanges,
   SimpleChanges,
   ViewChild
@@ -12,6 +12,9 @@ import { fromEvent, Observable, zip } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { NgbCarousel } from '@ng-bootstrap/ng-bootstrap';
 import { BaseComponent } from '../../base-components/base-component/base-component.component';
+import { IStore } from '../../../store/reducers';
+import { select, Store } from '@ngrx/store';
+import { IRecipesState } from '../../../store/reducers/recipes/recipes.reducer';
 
 @Component({
   selector: 'app-recipe-carousel',
@@ -21,17 +24,16 @@ import { BaseComponent } from '../../base-components/base-component/base-compone
 })
 export class RecipeCarouselComponent extends BaseComponent implements OnChanges {
   private readonly minimalSwipePixels: number;
+  private recipes$!: Observable<IShortRecipe[]>;
+  private recipes!: IShortRecipe[];
+  private recipesCount$!: Observable<number>;
+  private canShowMore: boolean;
 
-  constructor() {
-    super();
+  constructor(store: Store<IStore>, private cd: ChangeDetectorRef) {
+    super(store);
     this.minimalSwipePixels = 20;
+    this.canShowMore = false;
   }
-
-  @Input()
-    recipes!: IShortRecipe[];
-
-  @Input()
-    totalRecipesCount!: number;
 
   @ViewChild('carouselXS', { static: false }) carouselXS!: NgbCarousel;
   @ViewChild('carouselContainer', { static: false }) carouselContainer!: ElementRef<HTMLDivElement>;
@@ -40,6 +42,17 @@ export class RecipeCarouselComponent extends BaseComponent implements OnChanges 
     if (this.recipes.length) {
       this.setupMobileCarouselEvents();
     }
+  }
+
+  init(): void {
+    console.log('RecipeCarouselComponent init');
+    this.recipes$ = this.getStore().pipe(select('recipes'), map((state: IRecipesState) => state.loadedRecipes));
+    this.recipesCount$ = this.getStore().pipe(select('recipes'), map((state: IRecipesState) => state.total));
+    const recipesSub = this.recipes$.subscribe((recipes: IShortRecipe[]) => {
+      this.recipes = recipes;
+      this.cd.detectChanges();
+    });
+    this.addSubscriptions(recipesSub);
   }
 
   setupMobileCarouselEvents(): void {
@@ -66,7 +79,7 @@ export class RecipeCarouselComponent extends BaseComponent implements OnChanges 
           this.carouselXS.prev();
         }
       });
-    this.addSubscription(swipe$);
+    this.addSubscriptions(swipe$);
   }
 
 }

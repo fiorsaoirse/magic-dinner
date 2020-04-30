@@ -1,34 +1,36 @@
 <div class="mt-auto" appScrollToTop>
   <!--Search panel-->
-  <app-search [label]="labels.search"
-              [actions]="actions.searchActions"
-              [template]="ingredientTemplate"
-              [selectedItems]="data.selectedIngredients"
-              (deleteFromSelected)="deleteFromSelected($event)"></app-search>
+  <app-search [template]="ingredientTemplate" [uiLabels]="labels.search"
+              [action]="action" [foundElements$]="foundIngredients$"></app-search>
+  <!-- Selected items -->
+  <ng-container>
+    <div class="badges-container d-flex flex-row flex-wrap">
+      <ng-container *ngFor="let item of (selectedIngredients$ | async)">
+        <app-badge [item]="item"></app-badge>
+      </ng-container>
+    </div>
+  </ng-container>
   <div class="button-group">
     <input type="button" class="btn btn-info ml-auto mr-auto mt-3" value="{{labels.buttons.submit}}" (click)="search()">
     <input type="button" class="btn btn-info ml-auto mr-auto mt-3" value="{{labels.buttons.random}}" (click)="randomSearch()">
   </div>
   <!-- Recipes panel -->
   <ng-container>
-    <ng-container *ngIf="data.recipes as recipes;">
+    <ng-container *ngIf="(recipes$ | async).length">
       <!-- Cards for big screens -->
       <div class="cards-container d-none d-lg-block">
-        <app-recipe-cards [recipes]="recipes" [totalRecipesCount]="data.totalRecipesCount" (showMore)="showMore()"></app-recipe-cards>
+        <app-recipe-cards></app-recipe-cards>
       </div>
-
       <!-- Carousel for small screens -->
       <div class="carousel-container d-block d-sm-none">
-        <app-recipe-carousel [recipes]="recipes" [totalRecipesCount]="data.totalRecipesCount"></app-recipe-carousel>
+        <app-recipe-carousel></app-recipe-carousel>
       </div>
     </ng-container>
   </ng-container>
 </div>
 
 <ng-template #ingredientTemplate let-item="item">
-  <div class="search-item pointer-element" (click)="addIngredient(item)">
+  <div class="search-item pointer-element" (click)="selectIngredient(item)">
     <div>{{item.Name}}</div>
   </div>
 </ng-template>
-
-<ngx-loading [show]="state.loading" [config]="spinnerConfig"></ngx-loading>

@@ -78,6 +78,7 @@ export default (html) => {
   // Get ingredients
   const ingredients = Array.from($ingredientsList).reduce((acc, curr) => {
     const dataIngredient = curr.attribs['data-ingredient-object'];
+    if (!dataIngredient && !dataIngredient.length) return acc;
     try {
       const parsedDataIngredient = JSON.parse(dataIngredient);
       const ingredient = new Ingredient(parsedDataIngredient.name.trim(),

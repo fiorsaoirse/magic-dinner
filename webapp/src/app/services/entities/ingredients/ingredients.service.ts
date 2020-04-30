@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpSenderService } from '../../http-sender.service';
 import { Observable } from 'rxjs';
 import { HttpParams } from '@angular/common/http';
-import { IFoundIngredient } from '../../../interfaces/found-ingredient';
+import { IIngredient } from '../../../interfaces/ingredient';
 import { map } from 'rxjs/operators';
 
 @Injectable({
@@ -14,9 +14,9 @@ export class IngredientsService {
 
   private _INGREDIENTS = 'ingredients';
 
-  get(term: string): Observable<IFoundIngredient[]> {
+  get(term: string): Observable<IIngredient[]> {
     const params = new HttpParams().set('term', term);
-    return this.http.get<{ data: IFoundIngredient[] }>(`${this._INGREDIENTS}/find`, params)
-      .pipe(map((resp: { data: IFoundIngredient[] }) => resp.data));
+    return this.http.get<{ data: IIngredient[] }>(`${this._INGREDIENTS}/find`, params)
+      .pipe(map((resp: { data: IIngredient[] }) => resp.data));
   }
 }

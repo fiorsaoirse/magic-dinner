@@ -71,6 +71,7 @@
       true,
       "check-format",
       "allow-leading-underscore"
-    ]
+    ],
+    "import-name": false
   }
 }

@@ -1,5 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
+import { Store } from '@ngrx/store';
+import { IStore } from '../../../store/reducers';
 
 @Component({
   selector: 'app-base-component',
@@ -10,7 +12,7 @@ export class BaseComponent implements OnInit, OnDestroy {
   // All subscriptions for component
   public subscriptions: Subscription[];
 
-  public constructor() {
+  public constructor(private store: Store<IStore>) {
     // On init state subscription's array is empty
     this.subscriptions = [];
   }
@@ -21,8 +23,12 @@ export class BaseComponent implements OnInit, OnDestroy {
   public destroy(): void {
   }
 
-  public addSubscription(s: Subscription) {
-    this.subscriptions.push(s);
+  public addSubscriptions(...s: Subscription[]) {
+    this.subscriptions = [...this.subscriptions, ...s];
+  }
+
+  public getStore(): Store<IStore> {
+    return this.store;
   }
 
   public ngOnInit(): void {

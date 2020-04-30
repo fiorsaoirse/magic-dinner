@@ -1,26 +1,24 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { IFoundIngredient } from '../../../interfaces/found-ingredient';
+import { Component, Input } from '@angular/core';
+import { IIngredient } from '../../../interfaces/ingredient';
+import { BaseComponent } from '../../base-components/base-component/base-component.component';
+import { IStore } from '../../../store/reducers';
+import { Store } from '@ngrx/store';
+import { ingredientRemove } from '../../../store/actions/ingredient/ingredient.remove.action';
 
 @Component({
   selector: 'app-badge',
   templateUrl: './badge.component.html',
   styleUrls: ['./badge.component.css']
 })
-export class BadgeComponent implements OnInit {
+export class BadgeComponent extends BaseComponent {
 
-  constructor() { }
+  constructor(store: Store<IStore>) { super(store); }
 
   @Input()
-    item?: IFoundIngredient;
+    item!: IIngredient;
 
-  @Output()
-    deleteById: EventEmitter<number> = new EventEmitter<number>();
-
-  ngOnInit() {
-  }
-
-  delete(id: number): void {
-    this.deleteById.emit(id);
+  public delete(id: number): void {
+    this.getStore().dispatch(ingredientRemove({ id }));
   }
 
 }

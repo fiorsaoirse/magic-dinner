@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -7,5 +7,13 @@ import { Subject } from 'rxjs';
 export class ClearService {
   constructor() {
   }
-  clearSearch$$ = new Subject();
+  private clearSearch$$ = new Subject<void>();
+
+  public next(): void {
+    this.clearSearch$$.next();
+  }
+
+  public getClear(): Observable<void> {
+    return this.clearSearch$$.asObservable();
+  }
 }

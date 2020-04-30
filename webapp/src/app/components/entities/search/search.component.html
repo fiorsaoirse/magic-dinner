@@ -1,14 +1,14 @@
 <section class="search-container">
   <div class="d-flex flex-column">
-    <label for="search" class="col-form-label">{{label.question}}</label>
-    <form id="search-form" class="p-2 d-flex flex-column dropdown h-auto" [formGroup]="state.form">
+    <label for="search" class="col-form-label">{{uiLabels.question}}</label>
+    <form id="search-form" class="p-2 d-flex flex-column dropdown h-auto" [formGroup]="form">
       <!-- Search input -->
       <input type="text" id="search"
              class="form-control"
              data-toggle="dropdown"
-             formControlName="input">
+             formControlName="searchInput">
       <!-- Search result container -->
-      <ng-container *ngIf="(data.result$ | async) as result">
+      <ng-container *ngIf="(foundElements$ | async) as result">
         <ng-container *ngIf="result.length">
           <div class="search-result" appOutsideClick (outsideClick)="hide($event)">
             <ng-container *ngFor="let item of result">
@@ -19,29 +19,19 @@
           </div>
         </ng-container>
       </ng-container>
-      <!-- Selected items -->
-      <ng-container *ngIf="selectedItems">
-        <div class="badges-container d-flex flex-row flex-wrap">
-          <ng-container *ngFor="let item of selectedItems">
-            <app-badge [item]="item" (deleteById)="delete($event)"></app-badge>
-          </ng-container>
-        </div>
-      </ng-container>
     </form>
   </div>
 </section>
 
-<!--<section class="search-controls-container position-relative">
-  &lt;!&ndash; Title container &ndash;&gt;
-  <ng-container *ngIf="label.title">
-    <span class="text-muted small">{{label.title}}</span>
-  </ng-container>
-</section>-->
+<section class="search-controls-container position-relative">
+  <!-- Hint container -->
+  <span class="text-muted small">{{uiLabels.hint}}</span>
+</section>
 
 <ng-template #loading>
-  <div class="position-absolute loading" *ngIf="this.state.loading">
+  <!--<div class="position-absolute loading" *ngIf="this.state.loading">
     Loading...
-  </div>
+  </div>-->
 </ng-template>
 
 <ng-template #defaultTemplate let-item="item">
