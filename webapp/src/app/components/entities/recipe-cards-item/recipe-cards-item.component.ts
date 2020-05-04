@@ -5,6 +5,7 @@ import { RecipesService } from '../../../services/entities/recipes/recipes.servi
 import { BaseComponent } from '../../base-components/base-component/base-component.component';
 import { Store } from '@ngrx/store';
 import { IStore } from '../../../store/reducers';
+import { recipeGetPending } from 'src/app/store/actions/recipes/recipes.get.action';
 
 @Component({
   selector: 'app-recipe-card',
@@ -13,22 +14,16 @@ import { IStore } from '../../../store/reducers';
 })
 export class RecipeCardsItemComponent extends BaseComponent {
 
-  constructor(store: Store<IStore>,
-              private modalService: NgbModal,
-              private recipesService: RecipesService) {
+  constructor(store: Store<IStore>) {
     super(store);
   }
 
   @Input()
   card?: IShortRecipe;
 
-  ngOnInit() {
-  }
+  init(): void {}
 
   openRecipe(url: string): void {
-    /*this.recipesService.get(url).subscribe((result: IRecipe) => {
-      const modalRef = this.modalService.open(RecipeComponent);
-      modalRef.componentInstance.recipe = result;
-    });*/
+    this.getStore().dispatch(recipeGetPending({ payload: url }));
   }
 }

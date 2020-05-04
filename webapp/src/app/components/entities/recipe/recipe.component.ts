@@ -2,7 +2,7 @@ import { Component, Input } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { IRecipe } from '../../../interfaces/recipe';
 import { BaseComponent } from '../../base-components/base-component/base-component.component';
-import { Store } from '@ngrx/store';
+import { Store, select } from '@ngrx/store';
 import { IStore } from '../../../store/reducers';
 import { recipeClear } from '../../../store/actions/recipes/recipes.clear.action';
 

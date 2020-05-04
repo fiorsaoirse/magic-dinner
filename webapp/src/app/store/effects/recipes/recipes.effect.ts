@@ -9,7 +9,10 @@ import {
   recipesGetRandomFailure,
   recipesGetRandomPending,
   recipesGetRandomSuccess,
-  recipesGetSuccess
+  recipesGetSuccess,
+  recipeGetPending,
+  recipeGetSuccess,
+  recipeGetFailure
 } from '../../actions/recipes/recipes.get.action';
 import { RecipesService } from '../../../services/entities/recipes/recipes.service';
 import { IListRecipes } from '../../../interfaces/responses/list-recipes';
@@ -28,13 +31,14 @@ export class RecipesEffect {
   private readonly fromRecipe: number;
 
   setLoadingTrue$ = createEffect(() => this.actions$.pipe(
-    ofType(recipesGetPending),
+    ofType(recipesGetPending, recipesGetRandomPending, recipesGetPending),
     map(() => loadingAdd({ actionId: recipesGetPending.type }))
     )
   );
 
   setLoadingFalse$ = createEffect(() => this.actions$.pipe(
-    ofType(recipesGetSuccess, recipesGetFailure),
+    ofType(recipesGetSuccess, recipesGetFailure, recipesGetRandomSuccess,
+           recipesGetRandomFailure, recipeGetSuccess, recipeGetFailure),
     map(() => loadingRemove({ actionId: recipesGetPending.type }))
     )
   );
@@ -43,7 +47,7 @@ export class RecipesEffect {
     ofType(recipesGetPending),
     switchMap(({ payload }) => this.recipesService.listRecipes(payload)
       .pipe(
-        map((result: IListRecipes) => recipesGetSuccess({ payload: result })),
+        map((payload: IListRecipes) => recipesGetSuccess({ payload })),
         catchError((err: any) => {
           console.error(err);
           this.notificationService.addErrorMessage(this.defaultErrorMessage);
@@ -52,6 +56,17 @@ export class RecipesEffect {
       ))
     )
   );
+
+  loadRecipe$ = createEffect(() => this.actions$.pipe(
+    ofType(recipeGetPending),
+    switchMap(({ payload }) => this.recipesService.get(payload)),
+    map((payload: IRecipe) => recipeGetSuccess({ payload })),
+    catchError((err: any) => {
+      console.error(err);
+      this.notificationService.addErrorMessage(this.defaultErrorMessage);
+      return of(recipeGetFailure());
+    })
+  ));
 
   loadRandomRecipe$ = createEffect(() => this.actions$.pipe(
     ofType(recipesGetRandomPending),
@@ -70,7 +85,7 @@ export class RecipesEffect {
       return data[randomRecipe];
     }),
     switchMap((recipe: IShortRecipe) => this.recipesService.get(recipe.url)),
-    map((recipe: IRecipe) => recipesGetRandomSuccess({ payload: recipe })),
+    map((payload: IRecipe) => recipesGetRandomSuccess({ payload })),
     catchError((err: any) => {
       console.error(err);
       this.notificationService.addErrorMessage(this.defaultErrorMessage);

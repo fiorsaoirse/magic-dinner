@@ -2,11 +2,13 @@ import { IShortRecipe } from '../../../interfaces/short-recipe';
 import {
   recipesGetFailure,
   recipesGetRandomSuccess,
-  recipesGetSuccess
+  recipesGetSuccess,
+  recipeGetSuccess
 } from '../../actions/recipes/recipes.get.action';
 import { createReducer, on } from '@ngrx/store';
 import { IRecipe } from '../../../interfaces/recipe';
 import { recipeClear } from '../../actions/recipes/recipes.clear.action';
+import { ingredientRemove } from '../../actions/ingredient/ingredient.remove.action';
 
 export interface IRecipesState {
   loadedRecipes: IShortRecipe[];
@@ -25,22 +27,24 @@ const initialState: IRecipesState = {
 export const recipesReducer = createReducer(
   initialState,
   on(recipesGetSuccess, (state, { payload }) => {
-    const { data } = payload;
+    const { data, total } = payload;
     const { currentPage, loadedRecipes } = state;
     const recipes = currentPage === null ? data : [...loadedRecipes, ...data];
     const nextPage = currentPage === null ? 1 : currentPage + 1;
     return({
       ...state,
+      total,
       currentPage: nextPage,
       loadedRecipes: recipes,
     });
   }),
   on(recipesGetFailure, state => state),
-  on(recipesGetRandomSuccess, (state, { payload }) => {
+  on(recipesGetRandomSuccess, recipeGetSuccess, (state, { payload }) => {
     return ({
       ...state,
       recipeToShow: payload,
     });
   }),
-  on(recipeClear, state  => ({ ...state, recipeToShow: null }))
+  on(recipeClear, state  => ({ ...state, recipeToShow: null })),
+  on(ingredientRemove, state => ({ ...state, currentPage: null }))
 );

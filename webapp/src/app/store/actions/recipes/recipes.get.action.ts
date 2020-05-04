@@ -7,6 +7,10 @@ const RECIPES_GET_PENDING = 'RECIPES_GET_PENDING';
 const RECIPES_GET_SUCCESS = 'RECIPES_GET_SUCCESS';
 const RECIPES_GET_FAILURE = 'RECIPES_GET_FAILURE';
 
+const RECIPE_GET_PENDING = 'RECIPE_GET_PENDING';
+const RECIPE_GET_SUCCESS = 'RECIPE_GET_SUCCESS';
+const RECIPE_GET_FAILURE = 'RECIPE_GET_FAILURE';
+
 const RECIPES_GET_RANDOM_PENDING = 'RECIPES_GET_RANDOM_PENDING';
 const RECIPES_GET_RANDOM_SUCCESS = 'RECIPES_GET_RANDOM_SUCCESS';
 const RECIPES_GET_RANDOM_FAILURE = 'RECIPES_GET_RANDOM_FAILURE';
@@ -21,6 +25,17 @@ export const recipesGetSuccess = createAction(
   props<{ payload: IListRecipes }>()
 );
 export const recipesGetFailure = createAction(RECIPES_GET_FAILURE);
+
+/* Getting recipe by url */
+export const recipeGetPending = createAction(
+  RECIPE_GET_PENDING,
+  props<{ payload: string }>()
+);
+export const recipeGetSuccess = createAction(
+  RECIPE_GET_SUCCESS,
+  props<{ payload: IRecipe }>()
+);
+export const recipeGetFailure = createAction(RECIPE_GET_FAILURE);
 
 /* Getting random recipe */
 export const recipesGetRandomPending = createAction(

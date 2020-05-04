@@ -39,10 +39,7 @@ export class RecipeCardsComponent extends BaseComponent {
     console.log('RecipeCardsComponent init');
     this.recipes$ = this.getStore().pipe(select('recipes'), map((state: IRecipesState) => state.loadedRecipes));
     this.recipesCount$ = this.getStore().pipe(select('recipes'), map((state: IRecipesState) => state.total));
-    this.recipe$ = this.getStore().pipe(
-      select('recipes'),
-      map((state: IRecipesState) => state.recipeToShow)
-    );
+
     this.selectedIngredients$ = this.getStore().pipe(
       select('ingredients'),
       map((state: IIngredientsState) => state.selected));
@@ -51,12 +48,8 @@ export class RecipeCardsComponent extends BaseComponent {
     const canShowMoreSub = zip(this.recipes$, this.recipesCount$).subscribe(([recipes, count]) => {
       this.canShowMore = count > recipes.length;
     });
-    const recipeSub = this.recipe$.pipe(filter((recipe: IRecipe | null) => !!recipe)).subscribe((result) => {
-      const modalRef = this.modalService.open(RecipeComponent);
-      modalRef.componentInstance.recipe = result;
-    });
 
-    this.addSubscriptions(selectedSub, canShowMoreSub, recipeSub);
+    this.addSubscriptions(selectedSub, canShowMoreSub);
   }
 
   public trackByFn(index: number, item: IShortRecipe): string {
