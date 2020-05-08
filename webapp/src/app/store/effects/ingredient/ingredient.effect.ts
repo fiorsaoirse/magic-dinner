@@ -10,7 +10,6 @@ import {
   ingredientGetPending,
   ingredientGetSuccess
 } from '../../actions/ingredient/ingredient.get.action';
-import { loadingAdd, loadingRemove } from '../../actions/common/loading.action';
 import { of } from 'rxjs';
 import { ClearService } from '../../../services/utils/clear.service';
 import { ingredientAddPending, ingredientAddSuccess } from '../../actions/ingredient/ingredient.add.action';
@@ -18,19 +17,6 @@ import { ingredientAddPending, ingredientAddSuccess } from '../../actions/ingred
 @Injectable()
 export class IngredientEffect {
   private readonly defaultErrorMessage: string;
-
-  setLoadingTrue$ = createEffect(() => this.actions$.pipe(
-    ofType(ingredientGetPending),
-    filter(action => action.actionType === INGREDIENT_GET_PENDING),
-    map(() => loadingAdd({ actionId: ingredientGetPending.type }))
-    )
-  );
-
-  setLoadingFalse$ = createEffect(() => this.actions$.pipe(
-    ofType(ingredientGetSuccess, ingredientGetFailure),
-    map(() => loadingRemove({ actionId: ingredientGetPending.type }))
-    )
-  );
 
   getIngredients$ = createEffect(() => this.actions$.pipe(
     ofType(ingredientGetPending),

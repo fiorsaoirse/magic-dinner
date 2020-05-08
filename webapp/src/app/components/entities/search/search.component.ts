@@ -1,11 +1,18 @@
-import { ChangeDetectionStrategy, Component, Input, TemplateRef } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  Input,
+  OnChanges,
+  SimpleChanges,
+  TemplateRef
+} from '@angular/core';
 import { BaseComponent } from '../../base-components/base-component/base-component.component';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { debounceTime, distinctUntilChanged, filter, map, skipWhile } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
 import { IStore } from '../../../store/reducers';
 import { SearchActionType } from '../../../store/actions/utils';
-import { Observable } from 'rxjs';
 import { ClearService } from '../../../services/utils/clear.service';
 
 export interface SearchUILabels {
@@ -19,13 +26,17 @@ export interface SearchUILabels {
   styleUrls: ['./search.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class SearchComponent extends BaseComponent {
+export class SearchComponent extends BaseComponent implements OnChanges {
   private form!: FormGroup;
+  // local state for search spinner
+  public loading: boolean;
 
-  constructor(store: Store<IStore>, private formBuilder: FormBuilder, private clearService: ClearService) {
+  constructor(store: Store<IStore>, private formBuilder: FormBuilder,
+              private clearService: ClearService, private cdr: ChangeDetectorRef) {
     super(store);
     const sub = this.clearService.getClear().subscribe(() => this.searchInput.reset());
     this.addSubscriptions(sub);
+    this.loading = false;
   }
 
   @Input()
@@ -33,7 +44,7 @@ export class SearchComponent extends BaseComponent {
   @Input()
   uiLabels!: SearchUILabels;
   @Input()
-  foundElements$!: Observable<any[]>;
+  foundElements!: any[];
   @Input()
   template?: TemplateRef<any>;
 
@@ -52,15 +63,26 @@ export class SearchComponent extends BaseComponent {
       filter(value => !!value),
       map((value: string) => value.trim().toLowerCase()),
       skipWhile((value: string) => value.length < 3),
-    ).subscribe((value: string) => this.getStore().dispatch(this.action(encodeURIComponent(value))));
+    ).subscribe((value: string) => {
+      this.loading = true;
+      this.cdr.detectChanges();
+      this.getStore().dispatch(this.action(encodeURIComponent(value)));
+    });
 
     this.addSubscriptions(searchInputSub);
   }
 
+  ngOnChanges(changes: SimpleChanges): void {
+    if (this.foundElements.length) {
+      this.loading = false;
+      this.cdr.detectChanges();
+    }
+  }
+
   // tslint:disable-next-line:variable-name
   hide(_event: Event): void {
-    // TODO: hide result list
-    console.log('close event');
+    this.foundElements = [];
+    this.searchInput.reset();
   }
 
   get searchInput(): FormControl {

@@ -1,4 +1,9 @@
 @import '~bootstrap/dist/css/bootstrap.min.css';
+@import "~normalize.css";
+
+html {
+  scroll-behavior: smooth;
+}
 
 ul {
   margin-block-start: 0;
@@ -12,6 +17,10 @@ ul {
   cursor: pointer;
 }
 
-.delete-btn {
-  cursor: pointer;
+.btn-circle {
+  border-radius: 100%!important;
+}
+
+.hidden {
+  display: none;
 }

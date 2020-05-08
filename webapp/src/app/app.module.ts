@@ -22,12 +22,13 @@ import { environment } from '../environments/environment';
 import { ScrollToTopDirective } from './directives/scroll-to-top/scroll-to-top.directive';
 import { NgxLoadingModule } from 'ngx-loading';
 import { RecipeCardsComponent } from './components/entities/recipe-cards/recipe-cards.component';
-import { NotificationComponent } from './components/entities/notification/notification.component';
+import { NotificationComponent } from './components/dynamic-components/notification/notification.component';
 import { StoreModule } from '@ngrx/store';
 import { appReducer } from './store/reducers';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { rootEffects } from './store/effects';
+import { ScrollToTopButtonComponent } from './components/dynamic-components/scroll-to-top-button/scroll-to-top-button.component';
 
 @NgModule({
   declarations: [
@@ -47,6 +48,7 @@ import { rootEffects } from './store/effects';
     RecipeCardsItemComponent,
     RecipeCardsComponent,
     NotificationComponent,
+    ScrollToTopButtonComponent,
   ],
   imports: [
     BrowserModule,
@@ -65,7 +67,7 @@ import { rootEffects } from './store/effects';
     { provide: 'BASE_URL', useValue: environment.restApiUrl },
   ],
   bootstrap: [AppComponent],
-  entryComponents: [RecipeComponent]
+  entryComponents: [RecipeComponent, ScrollToTopButtonComponent, NotificationComponent]
 })
 export class AppModule {
 }

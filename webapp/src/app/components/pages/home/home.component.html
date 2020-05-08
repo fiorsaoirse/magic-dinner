@@ -1,7 +1,7 @@
 <div class="mt-auto" appScrollToTop>
   <!--Search panel-->
   <app-search [template]="ingredientTemplate" [uiLabels]="labels.search"
-              [action]="action" [foundElements$]="foundIngredients$"></app-search>
+              [action]="action" [foundElements]="(foundIngredients$ | async)"></app-search>
   <!-- Selected items -->
   <ng-container>
     <div class="badges-container d-flex flex-row flex-wrap">
@@ -11,8 +11,8 @@
     </div>
   </ng-container>
   <div class="button-group">
-    <input type="button" class="btn btn-info ml-auto mr-auto mt-3" value="{{labels.buttons.submit}}" (click)="search()">
-    <input type="button" class="btn btn-info ml-auto mr-auto mt-3" value="{{labels.buttons.random}}" (click)="randomSearch()">
+    <input type="button" class="btn btn-info ml-2 mr-2 mt-3" value="{{labels.buttons.submit}}" (click)="search()">
+    <input type="button" class="btn btn-info ml-2 mr-2 mt-3" value="{{labels.buttons.random}}" (click)="randomSearch()">
   </div>
   <!-- Recipes panel -->
   <ng-container>

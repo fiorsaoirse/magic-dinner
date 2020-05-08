@@ -4,15 +4,15 @@ import { of } from 'rxjs';
 import { catchError, map, switchMap } from 'rxjs/operators';
 import { NotificationService } from '../../../services/utils/notification.service';
 import {
+  recipeGetFailure,
+  recipeGetPending,
+  recipeGetSuccess,
   recipesGetFailure,
   recipesGetPending,
   recipesGetRandomFailure,
   recipesGetRandomPending,
   recipesGetRandomSuccess,
-  recipesGetSuccess,
-  recipeGetPending,
-  recipeGetSuccess,
-  recipeGetFailure
+  recipesGetSuccess
 } from '../../actions/recipes/recipes.get.action';
 import { RecipesService } from '../../../services/entities/recipes/recipes.service';
 import { IListRecipes } from '../../../interfaces/responses/list-recipes';
@@ -31,7 +31,7 @@ export class RecipesEffect {
   private readonly fromRecipe: number;
 
   setLoadingTrue$ = createEffect(() => this.actions$.pipe(
-    ofType(recipesGetPending, recipesGetRandomPending, recipesGetPending),
+    ofType(recipesGetPending, recipesGetRandomPending, recipeGetPending),
     map(() => loadingAdd({ actionId: recipesGetPending.type }))
     )
   );

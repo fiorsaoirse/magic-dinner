@@ -1,5 +1,5 @@
-<ul class="cards-list">
-  <li *ngFor="let card of (recipes$ | async); trackBy: trackByFn">
+<ul class="cards-list ml-auto mr-auto">
+  <li *ngFor="let card of (recipes$ | async); trackBy: trackByFn" class="card-element">
     <app-recipe-card [card]="card"></app-recipe-card>
   </li>
 </ul>

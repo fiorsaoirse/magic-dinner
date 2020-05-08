@@ -1,20 +1,3 @@
-.search-item {
-  padding: 5px 10px;
-}
-
-.search-item:hover {
-  background: rgba(157, 198, 255, .3);
-}
-
-.badges {
-  margin-bottom: 0.5em;
-  margin-top: 0.5em;
-}
-
-.badges > .badge {
-  margin-right: 0.5em;
-}
-
 .carousel-container, .cards-container {
   margin-top: 2rem;
   margin-bottom: 2rem;
@@ -24,7 +7,6 @@
 .hidden {
   visibility: hidden;
 }
-
 
 ::ng-deep a.carousel-control-next,
 ::ng-deep a.carousel-control-prev {
@@ -41,19 +23,6 @@
   background-color: rgba(248, 249, 250, 0.7)!important
 }
 
-/*
-.animated {
-  animation: move 1s ease-in-out 0s 1 normal;
-  -moz-animation: move 1s ease-in-out 0s 1 normal;
-  -webkit-animation: move 1s ease-in-out 0s 1 normal;
+.button-group {
+  text-align: center;
 }
-
-@keyframes move {
-  from {
-    transform: translateX(0);
-  }
-  to {
-    transform: translateX(-300px);
-  }
-}
-*/

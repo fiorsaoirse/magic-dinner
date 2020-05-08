@@ -4,4 +4,10 @@
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: flex-start;
+  text-align: center;
+}
+
+.card-element::after {
+  content: "";
+  flex: auto;
 }

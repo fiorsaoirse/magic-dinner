@@ -23,12 +23,4 @@
   </div>
 </div>
 
-<div class="fixed-bottom">
-  <button type="button" class="btn btn-danger btn-circle btn-lg mb-4 float-right mr-3"
-          (click)="scrollToTop()">
-    <fa-icon [icon]="icon"></fa-icon>
-  </button>
-</div>
-
 <ngx-loading [show]="loading$ | async" [config]="spinnerConfig"></ngx-loading>
-<app-notification></app-notification>
