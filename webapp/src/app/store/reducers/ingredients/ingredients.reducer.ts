@@ -1,6 +1,6 @@
 import { IIngredient } from '../../../interfaces/ingredient';
 import { createReducer, on } from '@ngrx/store';
-import { ingredientGetSuccess } from '../../actions/ingredient/ingredient.get.action';
+import { ingredientGetFailure, ingredientGetSuccess } from '../../actions/ingredient/ingredient.get.action';
 import { ingredientAddSuccess } from '../../actions/ingredient/ingredient.add.action';
 import { ingredientRemove, ingredientReset } from '../../actions/ingredient/ingredient.remove.action';
 
@@ -22,6 +22,7 @@ export const ingredientsReducer = createReducer(
       found: payload,
     });
   }),
+  on(ingredientGetFailure, state => ({ ...state, found: [] })),
   on(ingredientAddSuccess, (state, { payload }) => {
     const { selected } = state;
     return ({

@@ -44,7 +44,7 @@ export class SearchComponent extends BaseComponent implements OnChanges {
   @Input()
   uiLabels!: SearchUILabels;
   @Input()
-  foundElements!: any[];
+  foundElements!: any[] | null;
   @Input()
   template?: TemplateRef<any>;
 
@@ -73,8 +73,8 @@ export class SearchComponent extends BaseComponent implements OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (this.foundElements.length) {
-      this.loading = false;
+    this.loading = false;
+    if (this.foundElements && this.foundElements.length) {
       this.cdr.detectChanges();
     }
   }
