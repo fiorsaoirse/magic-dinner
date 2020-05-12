@@ -1,8 +1,0 @@
-<ul class="cards-list ml-auto mr-auto">
-  <li *ngFor="let card of (recipes$ | async); trackBy: trackByFn" class="card-element">
-    <app-recipe-card [card]="card"></app-recipe-card>
-  </li>
-</ul>
-<ng-container *ngIf="canShowMore">
-  <input type="button" class="btn btn-info d-flex m-auto" value="Показать ещё" (click)="showMore()">
-</ng-container>

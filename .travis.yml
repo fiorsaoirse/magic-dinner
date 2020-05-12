@@ -2,7 +2,6 @@ language: node_js
 node_js:
   - node
 before_script:
-  - cd rest
   - npm i
 script:
   - make lint

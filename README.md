@@ -1,3 +1,3 @@
-[![Build Status](https://travis-ci.org/fiorsaoirse/magic-dinner.svg?branch=master)](https://travis-ci.org/fiorsaoirse/magic-dinner)
+[![Build Status](https://travis-ci.org/fiorsaoirse/magic-dinner-backend.svg?branch=master)](https://travis-ci.org/fiorsaoirse/magic-dinner)
 [![Maintainability](https://api.codeclimate.com/v1/badges/fcb74692e0023f481d2a/maintainability)](https://codeclimate.com/github/fiorsaoirse/magic-dinner/maintainability)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/fcb74692e0023f481d2a/test_coverage)](https://codeclimate.com/github/fiorsaoirse/magic-dinner/test_coverage)
