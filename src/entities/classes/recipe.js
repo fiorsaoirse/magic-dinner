@@ -1,5 +1,6 @@
 export default class Recipe {
-  constructor(title, text, portions, ingredients, calories, proteins, fat, carbs) {
+  constructor(title, text, portions, ingredients, calories,
+    proteins, fat, carbs, image) {
     this.title = title;
     this.text = text;
     this.portions = portions;
@@ -10,5 +11,6 @@ export default class Recipe {
       fat,
       carbs,
     };
+    this.image = image || '../../assets/DefaultRecipeImage.png';
   }
 }

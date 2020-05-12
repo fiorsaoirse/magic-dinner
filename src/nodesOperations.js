@@ -18,3 +18,17 @@ export const reduceNode = (func, node, acc) => {
   if (!children) return newAcc;
   return children.reduce((cAcc, child) => reduceNode(func, child, cAcc), newAcc);
 };
+
+export const findByPredicate = (func, node) => {
+  if (func(node)) {
+    return node;
+  }
+  const { children } = node;
+  if (children && children.length) {
+    const [result] = children
+      .reduce((acc, child) => [...acc, findByPredicate(func, child)], [])
+      .filter(Boolean);
+    return result;
+  }
+  return null;
+};

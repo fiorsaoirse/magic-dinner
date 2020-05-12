@@ -15,6 +15,7 @@ test('Crating instance of Recipe class', () => {
       fat: 2,
       carbs: 68,
     },
+    image: '../../assets/DefaultRecipeImage.png',
   };
 
   const recipe = new Recipe(

@@ -44,7 +44,8 @@ const cesar = {
     245,
     20.4,
     11.3,
-    14.1),
+    14.1,
+    'https://img09.rl0.ru/eda/c620x415i/s1.eda.ru/StaticContent/Photos/120131082454/161109234550/p_O.jpg'),
 };
 
 const chicken = {
@@ -70,7 +71,8 @@ const chicken = {
     261,
     35.5,
     1.8,
-    23.9),
+    23.9,
+    'https://img09.rl0.ru/eda/c620x415i/s2.eda.ru/StaticContent/Photos/170122183544/170209213750/p_O.jpg'),
 };
 
 export default [syrnick, cesar, chicken];

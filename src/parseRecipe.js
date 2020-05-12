@@ -1,5 +1,5 @@
 import cheerio from 'cheerio';
-import { reduceNode } from './nodesOperations';
+import { findByPredicate, reduceNode } from './nodesOperations';
 import Recipe from './entities/classes/recipe';
 import Ingredient from './entities/classes/ingredient';
 
@@ -39,11 +39,15 @@ const energyType = {
 export default (html) => {
   const $ = cheerio.load(html);
   const $recipeTitle = $('h1.recipe__name');
+  const $recipeImageContainer = $('div.recipe__cover').get(0);
   const $info = $('div.recipe__info-pad').children();
   const $nutritionList = $('ul.nutrition__list').children();
   const $ingredientsList = $('div.ingredients-list.layout__content-col > div.ingredients-list__content >'
     + ' p.content-item');
   const $steps = $('li.instruction > div.instruction__wrap > span.instruction__description');
+  // Get image
+  const imageNode = findByPredicate((currentNode) => !!(currentNode.type === 'tag' && currentNode.name === 'div' && $(currentNode).data('src')), $recipeImageContainer);
+  const image = imageNode && $(imageNode).data('src');
   // Get entities title
   const recipeTitle = $recipeTitle && $recipeTitle.text().trim();
   // Get portion count
@@ -90,5 +94,5 @@ export default (html) => {
     }
   }, []);
 
-  return new Recipe(recipeTitle, text, portions, ingredients, ...Object.values(energy));
+  return new Recipe(recipeTitle, text, portions, ingredients, ...Object.values(energy), image);
 };
