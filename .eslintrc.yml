@@ -1,16 +1,18 @@
 env:
-  node: true
-  jest: true
+    node: true
+    jest: true
 # https://github.com/babel/babel-eslint
 parser: babel-eslint
 rules:
-  no-console: 0
-  operator-linebreak: 0
+    no-console: 0
+    operator-linebreak: 0
+    indent: ["error", 4]
+    max-len: ["error", 120]
 plugins:
-  # https://github.com/jest-community/eslint-plugin-jest
-  - jest
-  # https://github.com/babel/eslint-plugin-babel
-  - babel
+    # https://github.com/jest-community/eslint-plugin-jest
+    - jest
+    # https://github.com/babel/eslint-plugin-babel
+    - babel
 extends:
-  - 'airbnb-base'
-  - 'plugin:jest/recommended'
+    - 'airbnb-base'
+    - 'plugin:jest/recommended'
