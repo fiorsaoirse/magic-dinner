@@ -35,7 +35,8 @@
 		"pug": "^3.0.0",
 		"request": "^2.88.2",
 		"request-promise-native": "^1.0.8",
-		"static-favicon": "~1.0.2"
+		"static-favicon": "~1.0.2",
+		"@jest/globals": "latest"
 	},
 	"devDependencies": {
 		"@babel/cli": "^7.10.4",

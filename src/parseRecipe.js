@@ -2,11 +2,12 @@ import cheerio from 'cheerio';
 import { findByPredicate, reduceNode } from './nodesOperations';
 import Recipe from './entities/classes/recipe';
 import Ingredient from './entities/classes/ingredient';
+import { formatText, isTagNode, isTextNode } from './utils/utils';
 
 const extractValue = (node) => {
     const data = reduceNode((innerAcc, innerNode) => {
         let newInnerAcc = innerAcc.slice();
-        if (innerNode.type === 'text') {
+        if (isTextNode(innerNode)) {
             newInnerAcc += innerNode.data.trim();
         }
         return newInnerAcc;
@@ -53,9 +54,14 @@ export default (html) => {
         + ' p.content-item');
     const $steps = $('span.instruction__description');
     // Get image
-    const imageNode = findByPredicate((currentNode) => !!(currentNode.type === 'tag'
-        && currentNode.name === 'div' && $(currentNode).data('src')), $recipeImageContainer);
-    const image = imageNode && $(imageNode).data('src');
+    const previewRE = new RegExp('preview', 'gm');
+    const imageNode = findByPredicate((currentNode) => {
+        if (!isTagNode(currentNode)) return false;
+        const { name, parent: { attribs: { 'class': classList } } } = currentNode;
+        if (classList && previewRE.test(classList)) return false;
+        return name === 'img' || name === 'image';
+    }, $recipeImageContainer);
+    const image = imageNode?.attribs?.src || imageNode?.attribs?.href;
     // Get entities title
     const recipeTitle = $recipeTitle && $recipeTitle.text().trim();
     // Get portion count
@@ -78,7 +84,7 @@ export default (html) => {
                 if (innerNode.type === 'text') {
                     const data = innerNode.data.trim();
                     if (!!data && !data.match(/^(\d+\.)/)) {
-                        newInnerAcc = [...newInnerAcc, innerNode.data.trim()];
+                        newInnerAcc = [...newInnerAcc, formatText(innerNode.data.trim())];
                     }
                 }
                 return newInnerAcc;
@@ -113,5 +119,5 @@ export default (html) => {
         }
     }, []);
 
-    return new Recipe(recipeTitle, text, portions, ingredients, energy, image);
+    return new Recipe(formatText(recipeTitle), text, portions, ingredients, energy, image);
 };

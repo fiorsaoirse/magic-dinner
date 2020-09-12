@@ -1,15 +1,8 @@
 import cheerio from 'cheerio';
 import ShortRecipe from './entities/classes/short-recipe';
 import { reduceNode } from './nodesOperations';
-
-const filterTagChildren = (item) => item.type === 'tag';
-
-const filterTextChildren = (item) => item.type === 'text';
-
-const replaceNbsps = (string) => {
-    const re = new RegExp(String.fromCharCode(160), 'g');
-    return string.replace(re, ' ');
-};
+// eslint-disable-next-line import/named
+import { formatText, isTagNode, isTextNode } from './utils/utils';
 
 export default (html) => {
     const $ = cheerio.load(html);
@@ -23,11 +16,11 @@ export default (html) => {
             acc.image = curr.attribs['data-src'];
         }
         if (curr.type === 'tag' && curr.name === 'h3' && curr.attribs.class.includes('item-title')) {
-            const anchorChild = curr.children.filter(filterTagChildren)[0];
-            const spanChild = anchorChild.children.filter(filterTagChildren)[0];
-            const textChild = spanChild.children.filter(filterTextChildren)[0];
+            const anchorChild = curr.children.filter(isTagNode)[0];
+            const spanChild = anchorChild.children.filter(isTagNode)[0];
+            const textChild = spanChild.children.filter(isTextNode)[0];
             // Some spaces are shown as special symbols
-            acc.title = replaceNbsps(textChild.data.trim());
+            acc.title = formatText(textChild.data.trim());
         }
         return acc;
     }, node, {}));
