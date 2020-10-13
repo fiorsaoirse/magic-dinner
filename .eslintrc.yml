@@ -8,6 +8,7 @@ rules:
     operator-linebreak: 0
     indent: ["error", 4]
     max-len: ["error", 120]
+    array-bracket-spacing: off
 plugins:
     # https://github.com/jest-community/eslint-plugin-jest
     - jest

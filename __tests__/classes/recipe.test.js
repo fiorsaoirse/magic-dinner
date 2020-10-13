@@ -1,5 +1,6 @@
 import Recipe from '../../src/entities/classes/recipe';
 import Ingredient from '../../src/entities/classes/ingredient';
+import { expect } from '@jest/globals';
 
 test('Crating instance of Recipe class', () => {
     const mockRecipe = {
@@ -17,7 +18,6 @@ test('Crating instance of Recipe class', () => {
         },
         image: '../../assets/DefaultRecipeImage.png',
     };
-
     const recipe = new Recipe(
         'Картофельное пюре',
         ['Сварите картофель.', 'Добавьте молоко и масло.', 'Помните в пюре.'],
@@ -30,6 +30,5 @@ test('Crating instance of Recipe class', () => {
             carbs: 68,
         },
     );
-
     expect(recipe).toEqual(mockRecipe);
 });

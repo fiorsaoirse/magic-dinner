@@ -6,12 +6,12 @@ const defaultEnergy = {
 };
 
 export default class Recipe {
-    constructor(title, text, portions, ingredients, energy, image = '../../assets/DefaultRecipeImage.png') {
+    constructor(title, text, portions, ingredients, energy, image) {
         this.title = title;
         this.text = text;
         this.portions = portions;
         this.ingredients = ingredients;
-        this.energy = energy || defaultEnergy;
-        this.image = image;
+        this.energy = Object.keys(energy).length ? energy : defaultEnergy;
+        this.image = image || '../../assets/DefaultRecipeImage.png';
     }
 }

@@ -8,8 +8,7 @@ export const filterNode = (func, node) => {
         return null;
     }
     const { children } = node;
-    return { ...node, children: children.map((c) => filterNode(func, c)).filter(Boolean) }; // Last
-    // filter is for deleting null-s from result set
+    return { ...node, children: children.map((c) => filterNode(func, c)).filter(Boolean) };
 };
 
 export const reduceNode = (func, node, acc) => {
@@ -24,9 +23,9 @@ export const findByPredicate = (func, node) => {
         return node;
     }
     const { children } = node;
-    if (children && children.length) {
-        const [result] = children
-            .reduce((acc, child) => [...acc, findByPredicate(func, child)], [])
+    if (children?.length) {
+        const [ result ] = children
+            .reduce((acc, child) => [ ...acc, findByPredicate(func, child) ], [])
             .filter(Boolean);
         return result;
     }

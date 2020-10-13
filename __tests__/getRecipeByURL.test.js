@@ -1,9 +1,8 @@
 import fs from 'fs';
 import path from 'path';
-// eslint-disable-next-line jest/no-mocks-import,import/no-named-as-default
 import data from '../__mocks__/mock-recipes';
 import parseRecipe from '../src/parseRecipe';
-import { describe, expect } from "@jest/globals";
+import { describe, expect } from '@jest/globals';
 
 const fixtures = '__fixtures__';
 const fixtureTemplate = 'get-page-by-url';
@@ -20,7 +19,6 @@ describe('Parse page and get Recipe instance', () => {
             try {
                 const snapshot = await promise;
                 const result = parseRecipe(snapshot);
-
                 expect(result).toEqual(recipe);
             } catch (e) {
                 throw new Error(e);

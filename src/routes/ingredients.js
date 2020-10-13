@@ -15,9 +15,10 @@ router.get('/find', async (req, res) => {
         });
         res.json({ data: JSON.parse(result) });
         res.end();
-    } catch (e) {
+    } catch (error) {
+        console.error(error);
         res.status(500);
-        res.json({ error: e });
+        res.json({ error });
         res.end();
     }
 });

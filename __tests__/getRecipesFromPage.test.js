@@ -1,10 +1,9 @@
 import fs from 'fs';
 import path from 'path';
-import ast from '../src/ast';
-// eslint-disable-next-line jest/no-mocks-import
+import parseShortRecipes from '../src/parseShortRecipes';
 import data from '../__mocks__/mock-parsed-data';
-// eslint-disable-next-line jest/no-mocks-import
 import dataWithDefaults from '../__mocks__/mock-recipes-with-default-params';
+import { describe, expect } from '@jest/globals';
 
 const fixtures = '__fixtures__';
 const oneElement = 'one-element.txt';
@@ -22,12 +21,12 @@ class TestData {
 }
 
 const testData = [
-    new TestData('Parse HTML with one element and generate AST', oneElement, slicedData),
-    new TestData('Parse HTML with some recipes and generate AST', html, data),
-    new TestData('Parse HTML with some recipes which doesn\'t have recipes and generate AST', htmlWithDefault, dataWithDefaults),
+    new TestData('Parse HTML with one element', oneElement, slicedData),
+    new TestData('Parse HTML with some recipes', html, data),
+    new TestData('Parse HTML with some recipes which doesn\'t have recipes', htmlWithDefault, dataWithDefaults),
 ];
 
-describe('Testing of generating AST', () => {
+describe('Testing of parsing short recipes', () => {
     testData.forEach(({ description, source, expected }) => {
         test(description, async () => {
             const promise = new Promise((res, rej) => {
@@ -36,10 +35,8 @@ describe('Testing of generating AST', () => {
                     res(file);
                 });
             });
-
             const snapshot = await promise;
-            const result = ast(snapshot);
-
+            const result = parseShortRecipes(snapshot);
             expect(result).toEqual(expected);
         });
     });

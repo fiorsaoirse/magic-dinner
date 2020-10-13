@@ -15,10 +15,10 @@ router.get('/get', async (req, res) => {
         });
         const recipe = parseRecipe(result);
         res.json(recipe);
-    } catch (e) {
-        console.log('errr', e);
+    } catch (error) {
+        console.error(error);
         res.status(500);
-        res.json({ e });
+        res.json({ error });
         res.end();
     }
 });

@@ -1,6 +1,6 @@
 import express from 'express';
 import request from 'request-promise-native';
-import ast from '../ast';
+import getShortRecipes from '../parseShortRecipes';
 
 const router = express.Router();
 
@@ -19,12 +19,13 @@ router.post('/', async (req, res) => {
         const parsedResult = JSON.parse(result);
         const html = parsedResult.Recipes;
         const total = parseInt(parsedResult.TotalCount, 10);
-        const generatedAST = ast(html);
-        res.json({ total, data: generatedAST });
+        const parsedRecipes = getShortRecipes(html);
+        res.json({ total, data: parsedRecipes });
         res.end();
-    } catch (e) {
+    } catch (error) {
+        console.error(error);
         res.status(500);
-        res.json({ error: e });
+        res.json({ error });
         res.end();
     }
 });
@@ -40,9 +41,10 @@ router.post('/count', async (req, res) => {
         const { total, currentUrl } = data;
         res.json({ total, currentUrl });
         res.end();
-    } catch (e) {
+    } catch (error) {
+        console.error(error);
         res.status(500);
-        res.json({ error: e });
+        res.json({ error });
         res.end();
     }
 });
