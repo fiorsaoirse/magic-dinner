@@ -1,17 +1,14 @@
-import { reduceNode } from './nodesOperations';
-import { isTextNode } from './utils';
+import { isTextNode, reduceNode } from './nodesUtils';
 
 const extractValue = (node) => {
-    const data = reduceNode((innerAcc, innerNode) => {
-        const newInnerAcc = innerAcc.slice();
-        return isTextNode(innerNode)
-            ? [ ...newInnerAcc, innerNode?.data?.trim() ]
-            : newInnerAcc;
-    }, node, []).join('');
+    const findTextValue = (innerAcc, innerNode) => (isTextNode(innerNode)
+        ? [ ...innerAcc, innerNode?.data?.trim() ]
+        : innerAcc);
+    const data = reduceNode(findTextValue, node, []).join('').replace(',', '.');
     if (!data) {
         throw new Error('Error during parsing nutrition: can\'t define data value');
     }
-    return parseFloat(data.replace(',', '.'));
+    return parseFloat(data);
 };
 
 /* eslint-disable quote-props */

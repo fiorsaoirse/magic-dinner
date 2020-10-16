@@ -1,27 +1,42 @@
 import cheerio from 'cheerio';
 import ShortRecipe from './entities/classes/short-recipe';
-import { reduceNode } from './utils/nodesOperations';
-import { formatText, isTagNode, isTextNode } from './utils/utils';
+import { isTagNode, isTextNode, reduceNode } from './utils/nodesUtils';
+import formatChars from './utils/charsFormatter';
+
+const nodeTypes = [
+    {
+        check: (node) => isTagNode(node) && /^\/recepty/.test(node.attribs.href),
+        process: (obj, { attribs }) => ({ ...obj, url: attribs.href }),
+    },
+    {
+        check: (node) => isTagNode(node) && node.attribs?.class?.includes('lazy-load-container'),
+        process: (obj, { attribs }) => ({ ...obj, image: attribs['data-src'] }),
+    },
+    {
+        check: (node) => isTagNode(node) && node.name === 'h3' && node.attribs?.class?.includes('item-title'),
+        process: (obj, node) => {
+            const [ anchorChild ] = node.children.filter(isTagNode);
+            const [ spanChild ] = anchorChild.children.filter(isTagNode);
+            const [ textChild ] = spanChild.children.filter(isTextNode);
+            const title = formatChars(textChild.data.trim());
+            return ({ ...obj, title });
+        },
+    },
+];
+
+const getProcess = (node) => nodeTypes.find(({ check }) => check(node));
 
 export default (html) => {
-    const $ = cheerio.load(html);
-    const recipeHref = new RegExp(/^\/recepty/);
-    const allRecipes = Array.from($('div.tile-list__horizontal-tile > div.clearfix'));
-    const result = allRecipes.map((node) => reduceNode((acc, curr) => {
-        if (isTagNode(curr) && curr.name === 'a' && recipeHref.test(curr.attribs.href)) {
-            acc.url = curr.attribs.href;
+    const dom = cheerio.load(html);
+    const recipeNodes = Array.from(dom('div.tile-list__horizontal-tile > div.clearfix'));
+    const processNode = (acc, node) => {
+        const nodeType = getProcess(node);
+        if (!nodeType) {
+            return acc;
         }
-        if (isTagNode(curr) && curr.name === 'div' && curr.attribs.class.includes('lazy-load-container')) {
-            acc.image = curr.attribs['data-src'];
-        }
-        if (isTagNode(curr) && curr.name === 'h3' && curr.attribs.class.includes('item-title')) {
-            const anchorChild = curr.children.filter(isTagNode)[0];
-            const spanChild = anchorChild.children.filter(isTagNode)[0];
-            const textChild = spanChild.children.filter(isTextNode)[0];
-            // Some spaces are shown as special symbols
-            acc.title = formatText(textChild.data.trim());
-        }
-        return acc;
-    }, node, {}));
-    return result.map((curr) => new ShortRecipe(curr.title, curr.image, curr.url));
+        const { process } = nodeType;
+        return process(acc, node);
+    };
+    const recipesData = recipeNodes.map((recipeNode) => reduceNode(processNode, recipeNode, {}));
+    return recipesData.map(({ title, image, url }) => new ShortRecipe(title, image, url));
 };
