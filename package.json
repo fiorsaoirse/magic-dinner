@@ -1,12 +1,13 @@
 {
 	"name": "magic-dinner-server",
-	"version": "0.0.4",
+	"version": "0.0.5",
 	"private": true,
 	"description": "This is backend for maginc-dinner-webapp",
 	"main": "dist/index.js",
 	"scripts": {
 		"test": "jest",
-		"start": "nodemon dist/bin/www",
+		"start": "node dist/bin/www.js",
+		"start dev": "nodemon dist/bin/www",
 		"build": "babel ./src --out-dir dist",
 		"clean": "rm -rf ./dist",
 		"lint": "npx eslint . --fix"
@@ -32,11 +33,9 @@
 		"morgan": "^1.10.0",
 		"node-express-generator": "0.0.1",
 		"npm-run-all": "^4.1.5",
-		"pug": "^3.0.0",
 		"request": "^2.88.2",
 		"request-promise-native": "^1.0.8",
-		"static-favicon": "~1.0.2",
-		"@jest/globals": "latest"
+		"static-favicon": "~1.0.2"
 	},
 	"devDependencies": {
 		"@babel/cli": "^7.10.4",
@@ -55,7 +54,8 @@
 		"jest": "^26.1.0",
 		"jest-cli": "^26.1.0",
 		"nodemon": "^2.0.4",
-		"supertest": "^4.0.2"
+		"supertest": "^4.0.2",
+		"@jest/globals": "latest"
 	},
 	"jest": {
 		"modulePathIgnorePatterns": [
