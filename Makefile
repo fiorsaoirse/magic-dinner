@@ -2,7 +2,7 @@ lint:
 	npx eslint .
 
 dev:
-	 DEBUG=rest:* npm start
+	 DEBUG=rest:* npm start dev
 
 build:
 	rm -rf dist
